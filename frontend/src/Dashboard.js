@@ -24,6 +24,8 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
 import Profile from "./Profile";
+import Finder from "./Finder";
+import EngagementType from "./EngagementType";
 
 
 const drawerWidth = 240;
@@ -162,7 +164,7 @@ export default function Dashboard() {
 
                 <Switch>
                     <Route path="/finder">
-                        <Profile/>
+                        <Finder/>
                     </Route>
                     <Route path="/profil">
                         <Profile/>
@@ -174,7 +176,7 @@ export default function Dashboard() {
                         <Profile/>
                     </Route>
                     <Route path="/engagement-typ">
-                        <Profile/>
+                        <EngagementType/>
                     </Route>
                     <Route exact path="/">
                         <Redirect to="/finder"/>
