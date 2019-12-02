@@ -24,6 +24,8 @@ import Deposits from './Deposits';
 import Orders from './Orders';
 import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
 import Profile from "./Profile";
+import Login from "./Login";
+import Auszeichnungen from "./Auszeichnungen";
 import Finder from "./Finder";
 import EngagementType from "./EngagementType";
 
@@ -170,16 +172,19 @@ export default function Dashboard() {
                         <Profile/>
                     </Route>
                     <Route path="/auszeichnungen">
-                        <Profile/>
+                        <Auszeichnungen/>
                     </Route>
                     <Route path="/rang">
-                        <Profile/>
+                        <Login/>
                     </Route>
                     <Route path="/engagement-typ">
                         <EngagementType/>
                     </Route>
                     <Route exact path="/">
                         <Redirect to="/finder"/>
+                    </Route>
+                    <Route path="/login">
+                        <Login/>
                     </Route>
                 </Switch>
             </div>
