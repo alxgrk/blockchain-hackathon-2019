@@ -12,14 +12,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-<<<<<<< HEAD
-import Copyright from "./Copyright";
-=======
 import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
 import Finder from "./Finder";
 import {NavLink} from "react-router-dom";
 import {Link} from "react-router-dom";
->>>>>>> 3311ec5460a7c310f765e21f3e474ddf62c63ab4
+import Copyright from "./Copyright";
 
 
 const useStyles = makeStyles(theme => ({
