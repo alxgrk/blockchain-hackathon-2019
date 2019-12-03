@@ -10,14 +10,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export FABRIC_VERSION=hlfv12
-export HL_COMPOSER_CLI=${DIR}/node_modules/.bin/composer
-
 echo "Development only script for Hyperledger Fabric control"
 
 
 # Grab the current directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export FABRIC_VERSION=hlfv12
+export HL_COMPOSER_CLI=${DIR}/node_modules/.bin/composer
+
 THIS_SCRIPT=`basename "$0"`
 echo "Running '${THIS_SCRIPT}'"
 
