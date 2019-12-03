@@ -11,16 +11,24 @@ https://hyperledger.github.io/composer/latest/integrating/getting-started-rest-a
 ./createPeerAdminCard.sh
 ```
 
+How to deploy network:
+```
+cd hyperledger-composer/aktivist-network
+../composer network install --card PeerAdmin@hlfv1 --archiveFile aktivist-network@0.0.1.bna
+../composer network start --networkName aktivist-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+../composer card import --file networkadmin.card
+```
+
 Show playground:
 ```
-cd hyperledger-composer/tutorial-network
+cd hyperledger-composer/aktivist-network
 ../composer-playground
 ```
 
 Start Rest Server:
 ```
-cd hyperledger-composer/tutorial-network
-../composer-rest-server
+cd hyperledger-composer/aktivist-network
+../composer-rest-server -c admin@aktivist-network -n never -d n -w true -p 9876
 ```
 
 # Screensharing
