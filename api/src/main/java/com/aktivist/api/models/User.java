@@ -23,6 +23,7 @@ public class User {
     private String nachname;
     private Date geburtsdatum;
     private int plz;
+    private String ort;
     private long handynummer;
     private String profilbeschreibung;
 
@@ -30,7 +31,7 @@ public class User {
     public User(){}
 
     public User(Long id, String email, String password_hash, String vorname, String nachname, Date geburtsdatum,
-                int plz, long handynummer, String profilbeschreibung) {
+                int plz, String ort, long handynummer, String profilbeschreibung) {
         this.id = id;
         this.email = email;
         this.password_hash = password_hash;
@@ -38,6 +39,7 @@ public class User {
         this.nachname = nachname;
         this.geburtsdatum = geburtsdatum;
         this.plz = plz;
+        this.ort = ort;
         this.handynummer = handynummer;
         this.profilbeschreibung = profilbeschreibung;
     }
@@ -103,6 +105,13 @@ public class User {
         this.plz = plz;
     }
 
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
 
     public long getHandynummer() {
         return handynummer;
