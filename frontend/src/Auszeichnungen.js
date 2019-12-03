@@ -51,7 +51,7 @@ export default function Auszeichnungen() {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <div className={theme.palette.text.title}>Auszeichnungen</div>
+        <div className={theme.palette.title}>Auszeichnungen</div>
         <Title>Kinder</Title>
         <Title>Organisation</Title>
         <Title>Sport</Title>

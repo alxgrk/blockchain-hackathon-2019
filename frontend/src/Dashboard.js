@@ -77,6 +77,7 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        height: '150vw',
     },
     drawerPaperClose: {
         overflowX: 'hidden',
@@ -88,6 +89,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(9),
         },
+        height: '150vw',
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
