@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     fontSize: '70px',
-    color: 'black',
+    color: '#cecece',
   },
   iconGold: {
     fontSize: '70px',
@@ -139,7 +139,7 @@ export default function Auszeichnungen() {
           </div>
         <div className={classes.iconTitle}>Organisation</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><BorderColorIcon className={classes.icon}/></div>
+            <div className={classes.iconDiv}><BorderColorIcon className={classes.iconBronze}/></div>
             <div className={classes.iconDiv}><BorderColorIcon className={classes.icon}/></div>
             <div className={classes.iconDiv}><BorderColorIcon className={classes.icon}/></div>
           </div>
@@ -151,9 +151,9 @@ export default function Auszeichnungen() {
           </div>
           <div className={classes.iconTitle}>Tiere</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><PetsIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><PetsIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><PetsIcon className={classes.icon}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={classes.iconBronze}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={classes.iconSilver}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={classes.iconGold}/></div>
           </div>
       </div>
       <Box mt={8}>
