@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary" align="center" position="fixed" bottom='0'>
+        <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             {'Aktivist | komm mit - hilf deiner Community'}
             {' '}
