@@ -5,14 +5,21 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+<<<<<<< HEAD
 import Copyright from "./Copyright";
+=======
+import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
+import Finder from "./Finder";
+import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
+>>>>>>> 3311ec5460a7c310f765e21f3e474ddf62c63ab4
 
 
 const useStyles = makeStyles(theme => ({
@@ -81,6 +88,7 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            component={Link} to="/finder"
           >
             Sign In
           </Button>
@@ -103,4 +111,8 @@ export default function Login() {
       </Box>
     </Container>
   );
+}
+
+function handleOnClick() {
+
 }

@@ -20,13 +20,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import {mainListItems} from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
 import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
 import Profile from "./Profile";
 import Login from "./Login";
 import Auszeichnungen from "./Auszeichnungen";
 import Finder from "./Finder";
+import Rang from "./Rang";
 import EngagementType from "./EngagementType";
 
 
@@ -175,13 +174,13 @@ export default function Dashboard() {
                         <Auszeichnungen/>
                     </Route>
                     <Route path="/rang">
-                        <Login/>
+                        <Rang/>
                     </Route>
                     <Route path="/engagement-typ">
                         <EngagementType/>
                     </Route>
                     <Route exact path="/">
-                        <Redirect to="/finder"/>
+                        <Redirect to="/login"/>
                     </Route>
                     <Route path="/login">
                         <Login/>
