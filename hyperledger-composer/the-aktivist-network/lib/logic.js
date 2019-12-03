@@ -1,3 +1,8 @@
+/**
+ * Track the trade of a commodity from one trader to another
+ * @param {org.uni.leipzig.aktivist.AktivitaetErfuellt} event - the trade to be processed
+ * @transaction
+ */
 async function aktivitaetErfuellt(event) {
 
     /**
@@ -16,23 +21,60 @@ async function aktivitaetErfuellt(event) {
      * Aktivitaet
      */
     let aktivitaet = event.aktivitaet
+    aktivitaet.benutzer = event.benutzer
     
     let benutzerAktivitaeten = event.benutzer.aktivitaeten
-    benutzerAktivitaeten += aktivitaet
+    benutzerAktivitaeten.push(aktivitaet)
 
+    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
     let aktivitaetenAssetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Aktivitaet');
 
-    await aktivitaetenAssetRegistry.update(benutzerAktivitaeten);
+    await benutzerRegistry.update(event.benutzer)
+    await aktivitaetenAssetRegistry.update(aktivitaet);
 }
 
-// async function tradeCommodity(trade) {
-//     trade.commodity.owner = trade.newOwner;
-//     let assetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Commodity');
-//     await assetRegistry.update(trade.commodity);
-// }
+/**
+ * Track the trade of a commodity from one trader to another
+ * @param {org.uni.leipzig.aktivist.ZertifikatErhalten} event - the trade to be processed
+ * @transaction
+ */
+async function zertifikateErhalten(event) {
+    let benutzerZertifikate = event.benutzer.zertifikate
+    
+    let zertifikat = event.zertifikat
+    benutzerZertifikate.push(zertifikat)
 
-// async function tradeCommodity(trade) {
-//     trade.commodity.owner = trade.newOwner;
-//     let assetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Commodity');
-//     await assetRegistry.update(trade.commodity);
-// }
+    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
+
+    await benutzerRegistry.update(event.benutzer)
+}
+
+/**
+ * Track the trade of a commodity from one trader to another
+ * @param {org.uni.leipzig.aktivist.EhrentalerAusgegeben} event - the trade to be processed
+ * @transaction
+ */
+async function ehrentalerAusgegeben(event) {
+    /**
+     * Update konto
+     */
+    let konto = event.benutzer.konto;
+
+    konto.ehrentaler -= event.ehrentaler
+
+    let kontoAssetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Konto');
+
+    await kontoAssetRegistry.update(konto);
+
+    /**
+     * Update benefits
+     */
+    let benutzerBenefits = event.benutzer.benefits
+    
+    let benefit = event.benefit
+    benutzerBenefits.push(benefit)
+
+    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
+
+    await benutzerRegistry.update(event.benutzer)
+}

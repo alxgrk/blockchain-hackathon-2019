@@ -12,6 +12,7 @@ asset Konto identified by id {
 asset Aktivitaet identified by id {
   o String id
   o String name
+  --> Benutzer benutzer
 }
 asset Zertifikat identified by id {
   o String id
@@ -25,7 +26,7 @@ asset Benefit identified by id {
  */
 transaction AktivitaetErfuellt {
     o Integer ehrentaler
-    o Integer ehrenpunkt
+    o Integer ehrenpunkte
     --> Aktivitaet aktivitaet
     --> Verein verein
     --> Benutzer benutzer
@@ -53,6 +54,7 @@ participant Benutzer identified by akteurId {
     --> Konto konto
     --> Aktivitaet[] aktivitaeten
     --> Zertifikat[] zertifikate
+    --> Benefit[] benefits
 }
 participant Sponsor identified by akteurId { 
     o String akteurId
