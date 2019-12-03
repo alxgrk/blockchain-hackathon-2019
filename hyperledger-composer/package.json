@@ -58,6 +58,7 @@
     "composer-cli": "^0.20.9",
     "composer-playground": "^0.20.9",
     "composer-rest-server": "^0.20.9",
+    "generator-hyperledger-composer": "^0.20.9",
     "yo": "^3.1.1"
   }
 }
