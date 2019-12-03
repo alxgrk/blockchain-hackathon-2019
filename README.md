@@ -13,29 +13,29 @@ https://hyperledger.github.io/composer/latest/integrating/getting-started-rest-a
 
 How to deploy network:
 ```
-cd hyperledger-composer/aktivist-network
-../composer network install --card PeerAdmin@hlfv1 --archiveFile aktivist-network@0.0.1.bna
-../composer network start --networkName aktivist-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+cd hyperledger-composer/the-aktivist-network
+../composer network install --card PeerAdmin@hlfv1 --archiveFile the-aktivist-network@0.0.1.bna
+../composer network start --networkName the-aktivist-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
 ../composer card import --file networkadmin.card
 ```
 
 How to update network:
 ```
-cd hyperledger-composer/aktivist-network
-../composer archive create -t dir -n . -a aktivist-network@0.0.1.bna
-../composer network update -a aktivist-network@0.0.1.bna --card admin@aktivist-network
+cd hyperledger-composer/the-aktivist-network
+../composer archive create -t dir -n . -a the-aktivist-network@0.0.1.bna
+../composer network update -a the-aktivist-network@0.0.1.bna --card admin@the-aktivist-network
 ```
 
 Show playground:
 ```
-cd hyperledger-composer/aktivist-network
+cd hyperledger-composer/the-aktivist-network
 ../composer-playground
 ```
 
 Start Rest Server:
 ```
-cd hyperledger-composer/aktivist-network
-../composer-rest-server -c admin@aktivist-network -n never -d n -w true -p 9876
+cd hyperledger-composer/the-aktivist-network
+../composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876
 ```
 
 # Screensharing
