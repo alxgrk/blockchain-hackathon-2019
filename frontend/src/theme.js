@@ -16,6 +16,11 @@ const theme = createMuiTheme({
     background: {
       default: '#fff',
     },
+    title: {
+      textAlign: 'center',
+      padding: '15px',
+      fontSize: '32px',
+    },
   },
 });
 

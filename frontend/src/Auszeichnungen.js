@@ -18,19 +18,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
+import Title from './Title';
+import { useTheme } from '@material-ui/core/styles';
+import Copyright from "./Copyright";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -54,14 +46,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function Auszeichnungen() {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
-        <SearchIcon style={{ fontSize: 90 }}/>
-        <SearchIcon style={{ fontSize: 90 }}/>
-        <SearchIcon style={{ fontSize: 90 }}/>
+        <div className={theme.palette.text.title}>Auszeichnungen</div>
+        <Title>Kinder</Title>
+        <Title>Organisation</Title>
+        <Title>Sport</Title>
       </div>
       <Box mt={8}>
         <Copyright />
