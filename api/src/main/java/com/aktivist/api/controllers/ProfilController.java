@@ -16,6 +16,6 @@ public class ProfilController {
     @RequestMapping("profil/{id}")
     public String getProfil(@PathVariable("id") long id) {
         var user = dbHelper.getUserById(id);
-        return user.getNachname();
+        return user.getDataAsJson();
     }
 }

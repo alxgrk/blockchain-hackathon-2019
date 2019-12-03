@@ -1,5 +1,8 @@
 package com.aktivist.api.models;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +40,11 @@ public class User {
         this.plz = plz;
         this.handynummer = handynummer;
         this.profilbeschreibung = profilbeschreibung;
+    }
+
+    public String getDataAsJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
     public Long getId() {
