@@ -124,7 +124,7 @@ export default function Profile() {
     const [handynummer, setHandynummer] = useState(null);
     const [profilbeschreibung, setProfilbeschreibung] = useState(null);
     useEffect(() => {
-        axios.get("http://localhost:8080/profil/2").then((response)=>{
+        axios.get("http://localhost:8090/profil/2").then((response)=>{
             setFullname(response.data.vorname + ' ' + response.data.nachname)
             setEmail(response.data.email)
             setGeburtsdatum(response.data.geburtsdatum)

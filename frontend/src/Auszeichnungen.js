@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,6 +25,7 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import PetsIcon from '@material-ui/icons/Pets';
+import axios from "axios";
 
 
 
@@ -98,6 +99,21 @@ export default function Auszeichnungen() {
   const classes = useStyles();
   const theme = useTheme();
 
+  const [ehrentaler, setEhrentaler] = useState(null);
+  const [ehrenpunkte, setEhrenpunkte] = useState(null);
+  const [auszeichnungen, setAuszeichnungen] = useState(null);
+  useEffect(() => {
+    axios.get("http://localhost:9876/api/Benutzer/3876").then((response)=>{
+      setAuszeichnungen(response.data.zertifikate)
+    })
+  });
+  useEffect(() => {
+    axios.get("http://localhost:9876/api/Konto/6659").then((response)=>{
+      setEhrentaler(response.data.ehrentaler)
+      setEhrenpunkte(response.data.ehrenpunkte)
+    })
+  });
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -105,12 +121,12 @@ export default function Auszeichnungen() {
         <div className={classes.titlebar}>Rang</div>
           <div>
             <div className={classes.flex}>
-              <div className={classes.marginLeft}>Ehrenlevel:</div>
-              <div className={classes.marginRight}>Level</div>
+              <div className={classes.marginLeft}>Ehrentaler:</div>
+              <div className={classes.marginRight}>{ehrentaler}</div>
             </div>
             <div className={classes.flex}>
               <div className={classes.marginLeft}>Ehrenpunkte:</div>
-              <div className={classes.marginRight}>Punkte</div>
+              <div className={classes.marginRight}>{ehrenpunkte}</div>
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 package com.aktivist.api.controllers;
 
+import com.aktivist.api.models.Verein;
 import com.aktivist.api.services.DbHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,7 @@ public class VereinController {
     @CrossOrigin
     @RequestMapping("verein/{id}")
     public String getProfil(@PathVariable("id") long id) {
-        var verein = dbHelper.getVereinById(id);
+        Verein verein = dbHelper.getVereinById(id);
         return verein.getDataAsJson();
     }
 }
