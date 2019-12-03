@@ -20,8 +20,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import {mainListItems} from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
 import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
 import Profile from "./Profile";
 import Login from "./Login";
@@ -78,6 +76,7 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        height: '150vw',
     },
     drawerPaperClose: {
         overflowX: 'hidden',
@@ -89,6 +88,7 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(9),
         },
+        height: '150vw',
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
@@ -174,14 +174,11 @@ export default function Dashboard() {
                     <Route path="/auszeichnungen">
                         <Auszeichnungen/>
                     </Route>
-                    <Route path="/rang">
-                        <Login/>
-                    </Route>
                     <Route path="/engagement-typ">
                         <EngagementType/>
                     </Route>
                     <Route exact path="/">
-                        <Redirect to="/finder"/>
+                        <Redirect to="/login"/>
                     </Route>
                     <Route path="/login">
                         <Login/>
