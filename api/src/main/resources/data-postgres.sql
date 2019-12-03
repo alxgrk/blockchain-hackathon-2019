@@ -6,5 +6,5 @@ VALUES('Erika.Ehrenfrau@Email.com', '123dwA6787dA8sd', 'Erika', 'Ehrenfrau', '19
 'Dies ist eine Profilbeschreibung :)');
 
 INSERT INTO Vereine(email, password_hash, vereinsname, plz, ort, handynummer, beschreibung )
-VALUES('Erika.Ehrenfrau@Email.com', '123dwA6787dA8sd', 'Erika', 1203, 'Leipzig', 555123123,
-'Dies ist eine Profilbeschreibung :)');
+VALUES('Verein.Verein@Email.com', '123dwA6787dA8sd', 'Verein', 1203, 'Leipzig', 555123123,
+'Dies ist eine Vereinsbeschreibung :)');
