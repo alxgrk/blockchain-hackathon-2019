@@ -45,17 +45,25 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  title: {
-    textAlign: 'center',
-    padding: '15px',
-    fontSize: '32px',
-  },
   iconDiv: {
     width: '30%',
     textAlign: 'center',
   },
   icon: {
     fontSize: '70px',
+    color: 'black',
+  },
+  iconGold: {
+    fontSize: '70px',
+    color: '#d4af37',
+  },
+  iconSilver: {
+    fontSize: '70px',
+    color: '#8a9597',
+  },
+  iconBronze: {
+    fontSize: '70px',
+    color: '#cc8e34',
   },
   container: {
     width: '100%',
@@ -65,7 +73,25 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'left',
     fontSize: '30px',
     color: '#148b37',
-  }
+  },
+  flex: {
+    display: 'flex',
+    padding: ' 10px 0',
+    justifyContent: 'space-between',
+    borderBottom: '1px solid #000',
+    margin: '2%',
+  },
+  marginRight: {
+    marginRight: '2%',
+  },
+  marginLeft: {
+    marginLeft: '2%',
+  },
+  titlebar: {
+    textAlign: 'center',
+    padding: '15px',
+    fontSize: '32px',
+   }
 }));
 
 export default function Auszeichnungen() {
@@ -75,12 +101,25 @@ export default function Auszeichnungen() {
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <div className={classes.title}>Auszeichnungen</div>
+
+        <div className={classes.titlebar}>Rang</div>
+          <div>
+            <div className={classes.flex}>
+              <div className={classes.marginLeft}>Ehrenlevel:</div>
+              <div className={classes.marginRight}>Level</div>
+            </div>
+            <div className={classes.flex}>
+              <div className={classes.marginLeft}>Ehrenpunkte:</div>
+              <div className={classes.marginRight}>Punkte</div>
+            </div>
+          </div>
+
+        <div className={classes.titlebar}>Auszeichnungen</div>
         <div className={classes.iconTitle}>Kinder</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.icon}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconBronze}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconSilver}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconGold}/></div>
           </div>
         <div className={classes.iconTitle}>Organisation</div>
           <div className={classes.container}>

@@ -25,7 +25,6 @@ import Profile from "./Profile";
 import Login from "./Login";
 import Auszeichnungen from "./Auszeichnungen";
 import Finder from "./Finder";
-import Rang from "./Rang";
 import EngagementType from "./EngagementType";
 
 
@@ -174,9 +173,6 @@ export default function Dashboard() {
                     </Route>
                     <Route path="/auszeichnungen">
                         <Auszeichnungen/>
-                    </Route>
-                    <Route path="/rang">
-                        <Rang/>
                     </Route>
                     <Route path="/engagement-typ">
                         <EngagementType/>
