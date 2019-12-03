@@ -1,0 +1,59 @@
+namespace org.uni.leipzig.aktivist
+
+
+/**
+  Assets
+ */
+asset Konto identified by id {
+  o String id
+  o Integer ehrentaler
+  o Integer ehrenpunkte
+}
+asset Aktivitaet identified by id {
+  o String id
+  o String name
+}
+asset Zertifikat identified by id {
+  o String id
+}
+asset Benefit identified by id {
+  o String id
+}
+
+/**
+  Transactions
+ */
+transaction AktivitaetErfuellt {
+    o Integer ehrentaler
+    o Integer ehrenpunkt
+    --> Aktivitaet aktivitaet
+    --> Verein verein
+    --> Benutzer benutzer
+}
+transaction ZertifikatErhalten {
+    --> Zertifikat zertifikat
+    --> Verein verein
+    --> Benutzer benutzer
+}
+transaction EhrentalerAusgegeben {
+    o Integer ehrentaler
+    --> Benefit benefit
+    --> Sponsor sponsor
+    --> Benutzer benutzer
+}
+
+/**
+  Participants
+ */
+participant Verein identified by akteurId {
+    o String akteurId
+}
+participant Benutzer identified by akteurId { 
+    o String akteurId
+    --> Konto konto
+    --> Aktivitaet[] aktivitaeten
+    --> Zertifikat[] zertifikate
+}
+participant Sponsor identified by akteurId { 
+    o String akteurId
+}

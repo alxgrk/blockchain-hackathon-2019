@@ -2,7 +2,7 @@
   "engines": {
     "composer": "^0.20.9"
   },
-  "name": "aktivist-network",
+  "name": "aktivist-network-2",
   "version": "0.0.1",
   "description": "Developer tutorial.",
   "scripts": {

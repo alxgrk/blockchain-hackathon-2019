@@ -1,20 +1,57 @@
-/**
- * My commodity trading network
- */
 namespace org.uni.leipzig.aktivist
-asset Commodity identified by tradingSymbol {
-    o String tradingSymbol
-    o String description
-    o String mainExchange
-    o Double quantity
-    --> Trader owner
+
+
+/**
+  Assets
+ */
+abstract asset AbstractAsset identified by id {
+  o String id
+  --> Akteur owner
 }
-participant Trader identified by tradeId {
-    o String tradeId
-    o String firstName
-    o String lastName
+
+asset Konto extends AbstractAsset {
+  o Integer ehrentaler
+  o Integer ehrenpunkte
 }
-transaction Trade {
-    --> Commodity commodity
-    --> Trader newOwner
+asset Aktivitaet extends AbstractAsset {
+  o String name
 }
+asset Zertifikat extends AbstractAsset {}
+asset Benefit extends AbstractAsset {}
+
+/**
+  Transactions
+ */
+transaction AktivitaetErfuellt {
+    o Integer ehrentaler
+    o Integer ehrenpunkt
+    --> Aktivitaet aktivitaet
+    --> Verein verein
+    --> Benutzer benutzer
+}
+transaction ZertifikatErhalten {
+    --> Zertifikat zertifikat
+    --> Verein verein
+    --> Benutzer benutzer
+}
+transaction EhrentalerAusgegeben {
+    o Integer ehrentaler
+    --> Benefit benefit
+    --> Sponsor sponsor
+    --> Benutzer benutzer
+}
+
+/**
+  Participants
+ */
+abstract participant Akteur identified by akteurId {
+    o String akteurId
+}
+
+participant Verein extends Akteur { }
+participant Benutzer extends Akteur { 
+    --> Konto konto
+    --> Aktivitaet[] aktivitaeten
+    --> Zertifikat[] zertifikate
+}
+participant Sponsor extends Akteur { }

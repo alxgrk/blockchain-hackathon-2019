@@ -19,6 +19,13 @@ cd hyperledger-composer/aktivist-network
 ../composer card import --file networkadmin.card
 ```
 
+How to update network:
+```
+cd hyperledger-composer/aktivist-network
+../composer archive create -t dir -n . -a aktivist-network@0.0.1.bna
+../composer network update -a aktivist-network@0.0.1.bna --card admin@aktivist-network
+```
+
 Show playground:
 ```
 cd hyperledger-composer/aktivist-network
