@@ -9,6 +9,7 @@ import clsx from "clsx";
 import Copyright from "./Copyright";
 import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -80,38 +81,65 @@ const useStyles = makeStyles(theme => ({
         padding: ' 10px 0',
         justifyContent: 'space-between',
         borderBottom: '1px solid #000',
-        margin: '4px',
+        margin: '2%',
     },
-    test: {
+    marginRight: {
+        marginRight: '2%',
+    },
+    marginLeft: {
+        marginLeft: '2%',
+    },
+    middle: {
         justifySelf: 'center',
+    },
+    profileIcon: {
+        fontSize: '30px',
+        marginLeft: '2%',
+        color: '#148b37',
+    },
+    button: {
+        backgroundColor: '#148b37',
+    },
+    flexDiv: {
+        display: 'flex',
+        padding: ' 10px 0',
+        justifyContent: 'center',
+        margin: '2%',
     }
 }));
+
+async function getDataAxios(){
+    const response =
+      await axios.get("http://localhost:8080/profil/2")
+    return response.data
+}
 
 export default function Profile() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+    let userData = getDataAxios();
+    const fullName = userData['vorname'] + ' ' + userData['nachname'];
 
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer}/>
-            <div className={classes.titlebar}>Heldenprofil</div>
+            <div className={classes.titlebar}>Ehrenprofil</div>
             <div className={classes.mainInformation, classes.flex}>
-                <PersonIcon/>
-                <div>Name</div>
+                <PersonIcon  className={classes.profileIcon}/>
+                <div className={classes.marginRight}>{fullName}</div>
             </div>
             <div>
                 <div className={classes.flex}>
-                    <div>Heldenlevel:</div>
-                    <div>Zahl</div>
+                    <div className={classes.marginLeft}>Ehrenlevel:</div>
+                    <div className={classes.marginRight}>Zahl</div>
                 </div>
                 <div className={classes.flex}>
-                    <div>Stunden diese Woche:</div>
-                    <div>Stundenzahl</div>
+                    <div className={classes.marginLeft}>Ehrenstunden diese Woche:</div>
+                    <div className={classes.marginRight}>Stundenzahl</div>
                 </div>
                 <dvi className={classes.flex}>
-                    <div>Stunden Insgesamt:</div>
-                    <div>Stundenzahl</div>
+                    <div className={classes.marginLeft}>Ehrenstunden Insgesamt:</div>
+                    <div className={classes.marginRight}>Stundenzahl</div>
                 </dvi>
             </div>
             <Container maxWidth="lg" className={classes.container}>
@@ -123,11 +151,13 @@ export default function Profile() {
                         </Paper>
                     </Grid>
                 </Grid>
+                <div className={classes.flexDiv}>
+                    <Button className={classes.button}>Auszeichnungen</Button>
+                </div>
                 <Box pt={4}>
                     <Copyright/>
                 </Box>
             </Container>
-            <Button className={classes.test}>Auszeichnungen</Button>
         </main>
     )
 }
