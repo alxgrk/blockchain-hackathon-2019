@@ -1,7 +1,9 @@
 package com.aktivist.api.controllers;
 
+import com.aktivist.api.models.User;
 import com.aktivist.api.models.Verein;
 import com.aktivist.api.services.DbHelper;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,13 @@ public class VereinController {
 
     @Autowired
     DbHelper dbHelper;
+
+    @CrossOrigin
+    @RequestMapping("verein")
+    public String getVereine() {
+        Iterable<Verein> vereine = dbHelper.getAllVereine();
+        return new Gson().toJson(vereine);
+    }
 
     @CrossOrigin
     @RequestMapping("verein/{id}")

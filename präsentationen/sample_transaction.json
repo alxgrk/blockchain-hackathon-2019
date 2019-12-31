@@ -1,0 +1,8 @@
+{
+ "$class": "org.uni.leipzig.aktivist.AktivitaetErfuellt",
+ "ehrentaler": 100,
+ "ehrenpunkte": 100,
+ "aktivitaet": "resource:org.uni.leipzig.aktivist.Aktivitaet#1648",
+ "verein": "resource:org.uni.leipzig.aktivist.Verein#8872",
+ "benutzer": "resource:org.uni.leipzig.aktivist.Benutzer#3876"
+}

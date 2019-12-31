@@ -152,22 +152,22 @@ export default function Profile() {
                     <div className={classes.marginLeft}>Geburtsdatum:</div>
                     <div className={classes.marginRight}>{geburtsdatum}</div>
                 </div>
-                <dvi className={classes.flex}>
+                <div className={classes.flex}>
                     <div className={classes.marginLeft}>Postleitzahl:</div>
                     <div className={classes.marginRight}>{plz}</div>
-                </dvi>
-                <dvi className={classes.flex}>
+                </div>
+                <div className={classes.flex}>
                     <div className={classes.marginLeft}>Ort:</div>
                     <div className={classes.marginRight}>{ort}</div>
-                </dvi>
-                <dvi className={classes.flex}>
+                </div>
+                <div className={classes.flex}>
                     <div className={classes.marginLeft}>Handynummer:</div>
                     <div className={classes.marginRight}>{handynummer}</div>
-                </dvi>
-                <dvi className={classes.flex}>
+                </div>
+                <div className={classes.flex}>
                     <div className={classes.marginLeft}>Profilbeschreibung: </div>
                     <div className={classes.marginRight}>{profilbeschreibung}</div>
-                </dvi>
+                </div>
             </div>
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>

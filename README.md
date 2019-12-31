@@ -1,42 +1,25 @@
 # blockchain-hackathon-2019
 
-# Hyperledger Fabric
-https://hyperledger.github.io/composer/latest/installing/development-tools.html
+# Start all services
 
-https://hyperledger.github.io/composer/latest/integrating/getting-started-rest-api.html
-
-## How to start fabric
 ```
-./startFabric.sh
-./createPeerAdminCard.sh
+docker-compose -f hyperledger-fabric/docker-compose.yml up -d && docker-compose up -d
 ```
 
-How to deploy network:
+# Recreate services after changing somethings
+
 ```
-cd hyperledger-composer/the-aktivist-network
-../composer network install --card PeerAdmin@hlfv1 --archiveFile the-aktivist-network@0.0.1.bna
-../composer network start --networkName the-aktivist-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
-../composer card import --file networkadmin.card
+docker-compose up -d --build {{service-name}}
+# or
+docker-compose -f hyperledger-fabric/docker-compose.yml up --force-recreate -d
 ```
 
-How to update network:
+# Stop and clean all services
+
 ```
-cd hyperledger-composer/the-aktivist-network
-../composer archive create -t dir -n . -a the-aktivist-network@0.0.1.bna
-../composer network update -a the-aktivist-network@0.0.1.bna --card admin@the-aktivist-network
+docker-compose -f hyperledger-fabric/docker-compose.yml down && docker-compose down
 ```
 
-Show playground:
-```
-cd hyperledger-composer/the-aktivist-network
-../composer-playground
-```
-
-Start Rest Server:
-```
-cd hyperledger-composer/the-aktivist-network
-../composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876
-```
 
 # Screensharing
 https://whereby.com/alxgrk

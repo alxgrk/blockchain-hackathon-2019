@@ -8,8 +8,6 @@ import com.aktivist.api.models.VereinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class DbHelper {
 
@@ -19,8 +17,16 @@ public class DbHelper {
     @Autowired
     private VereinRepository vereinRepository;
 
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public User getUserById(long id) {
         return userRepository.findById(id).get();
+    }
+
+    public Iterable<Verein> getAllVereine() {
+        return vereinRepository.findAll();
     }
 
     public Verein getVereinById(long id) {
