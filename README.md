@@ -6,7 +6,13 @@
 docker-compose -f hyperledger-fabric/docker-compose.yml up -d && docker-compose up -d
 ```
 
-# Recreate services after changing somethings
+# Updating blockchain code
+
+```
+docker-compose exec blockchain /hyperledger-fabric/the-aktivist-network/upgrade.sh
+```
+
+# Recreate services after changing something
 
 ```
 docker-compose up -d --build {{service-name}}
@@ -19,6 +25,10 @@ docker-compose -f hyperledger-fabric/docker-compose.yml up --force-recreate -d
 ```
 docker-compose -f hyperledger-fabric/docker-compose.yml down && docker-compose down
 ```
+
+# Problem recovery
+
+Stop and restart all services.
 
 
 # Screensharing

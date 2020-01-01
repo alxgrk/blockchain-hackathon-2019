@@ -26,5 +26,5 @@ then
 fi
 composer card import --file /hyperledger-fabric/admin-cards/the-aktivist-network-admin.card
 
-composer-playground &
-composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876
+composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
+composer-playground

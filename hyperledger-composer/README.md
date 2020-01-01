@@ -2,6 +2,13 @@
 
 Below steps are done for you, when you are using the Dockerfile.
 
+## Do things using docker
+
+Upgrade network
+```
+docker exec -t {{container_id}} /hyperledger-fabric/the-aktivist-network/upgrade.sh
+```
+
 ## Do things manually
 
 How to create an archive:

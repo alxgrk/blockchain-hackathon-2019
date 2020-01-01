@@ -1,21 +1,5 @@
-# Create React App example
+# Frontend
 
-## How to use
+To run the web app, simply start it using `docker-compose up -d` on the root of this project.
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
-
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
-```
-
-Install it and run:
-
-```sh
-npm install
-npm start
-```
-
-## The idea behind the example
-
-This example demonstrates how you can use [Create React App](https://github.com/facebookincubator/create-react-app).
+Any changes done to a file in `src` folder will automatically refresh the web app in your browser.
