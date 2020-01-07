@@ -31,6 +31,31 @@ docker-compose -f hyperledger-fabric/docker-compose.yml down && docker-compose d
 Stop and restart all services.
 
 
+
+# Blockchain start manually
+start fabric:
+
+```
+cd hyperledger-fabric
+./startFabric.sh
+
+```
+
+Install network:
+
+```
+cd ..
+cd hyperledger-composer/the-aktivist-network
+./composer network install --card PeerAdmin@hlfv1 --archiveFile the-aktivist-network@0.0.1.bna
+```
+
+Deploy network
+```
+./composer network start --networkName the-aktivist-network --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+../composer card import --file networkadmin.card
+```
+
+
 # Screensharing
 https://whereby.com/alxgrk
 
