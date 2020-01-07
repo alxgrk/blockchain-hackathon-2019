@@ -33,6 +33,12 @@ Stop and restart all services.
 
 
 # Blockchain start manually
+
+Pre-Install:
+
+https://hyperledger.github.io/composer/latest/installing/development-tools.html
+Step 1-2
+
 start fabric:
 
 ```
