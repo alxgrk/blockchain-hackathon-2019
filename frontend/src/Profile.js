@@ -109,7 +109,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getDataAxios(){
-    const response = axios.get("http://localhost:8080/profil/2").then(()=>{})
+    const response = axios.get("http://localhost:8091/profil/2").then(()=>{})
     return response.data
 }
 
@@ -124,7 +124,7 @@ export default function Profile() {
     const [handynummer, setHandynummer] = useState(null);
     const [profilbeschreibung, setProfilbeschreibung] = useState(null);
     useEffect(() => {
-        axios.get("http://localhost:8090/profil/2").then((response)=>{
+        axios.get("http://localhost:8091/profil/2").then((response)=>{
             setFullname(response.data.vorname + ' ' + response.data.nachname)
             setEmail(response.data.email)
             setGeburtsdatum(response.data.geburtsdatum)
