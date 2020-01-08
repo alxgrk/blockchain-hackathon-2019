@@ -12,14 +12,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    BasicAuthEntryPoint authEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/verein/**").hasRole("VEREIN")
                 .antMatchers("/profil/**").hasRole("USER")
                 .and()
-                .formLogin();
+                .httpBasic()
+                .authenticationEntryPoint(authEntryPoint);
     }
 
     @Override
