@@ -1,32 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import {mainListItems} from './listItems';
-import Chart from './Chart';
-import {BrowserRouter, Route, Redirect, useParams, Switch} from "react-router-dom";
-import Profile from "./Profile";
-import Login from "./Login";
-import Auszeichnungen from "./Auszeichnungen";
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import {LogoutButton, PrivateRoute} from "./Auth";
 import Finder from "./Finder";
+import Profile from "./Profile";
+import Auszeichnungen from "./Auszeichnungen";
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import EngagementType from "./EngagementType";
-
+import Login from "./Login";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import {mainListItems} from "./listItems";
+import Drawer from "@material-ui/core/Drawer";
 
 const drawerWidth = 240;
 
@@ -113,7 +105,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -141,11 +133,7 @@ export default function Dashboard() {
                                     className={classes.title}>
                             Aktivist-App
                         </Typography>
-                        {/*<IconButton color="inherit">*/}
-                        {/*    <Badge badgeContent={4} color="secondary">*/}
-                        {/*        <NotificationsIcon/>*/}
-                        {/*    </Badge>*/}
-                        {/*</IconButton>*/}
+                        <LogoutButton className={classes.title}/>
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -165,21 +153,21 @@ export default function Dashboard() {
                 </Drawer>
 
                 <Switch>
-                    <Route path="/finder">
+                    <PrivateRoute path="/finder">
                         <Finder/>
-                    </Route>
-                    <Route path="/profil">
+                    </PrivateRoute>
+                    <PrivateRoute path="/profil">
                         <Profile/>
-                    </Route>
-                    <Route path="/auszeichnungen">
+                    </PrivateRoute>
+                    <PrivateRoute path="/auszeichnungen">
                         <Auszeichnungen/>
-                    </Route>
-                    <Route path="/engagement-typ">
+                    </PrivateRoute>
+                    <PrivateRoute path="/engagement-typ">
                         <EngagementType/>
-                    </Route>
-                    <Route exact path="/">
-                        <Redirect to="/login"/>
-                    </Route>
+                    </PrivateRoute>
+                    <PrivateRoute exact path="/">
+                        <Redirect to="/finder"/>
+                    </PrivateRoute>
                     <Route path="/login">
                         <Login/>
                     </Route>
