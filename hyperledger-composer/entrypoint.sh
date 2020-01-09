@@ -26,5 +26,8 @@ then
 fi
 composer card import --file /hyperledger-fabric/admin-cards/the-aktivist-network-admin.card
 
-composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
+# upgrade once in the beginning
+/hyperledger-fabric/the-aktivist-network/upgrade.sh
+
+nohup composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
 composer-playground
