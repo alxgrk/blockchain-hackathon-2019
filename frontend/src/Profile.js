@@ -11,6 +11,13 @@ import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8091/profil/',
+    auth: {
+        username: "User",
+        password: "User"
+    }
+});
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -108,11 +115,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function getDataAxios(){
-    const response = axios.get("http://localhost:8091/profil/2").then(()=>{})
-    return response.data
-}
-
 export default function Profile() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -124,7 +126,7 @@ export default function Profile() {
     const [handynummer, setHandynummer] = useState(null);
     const [profilbeschreibung, setProfilbeschreibung] = useState(null);
     useEffect(() => {
-        axios.get("http://localhost:8091/profil/2").then((response)=>{
+        axiosInstance.get("2").then((response)=>{
             setFullname(response.data.vorname + ' ' + response.data.nachname)
             setEmail(response.data.email)
             setGeburtsdatum(response.data.geburtsdatum)
