@@ -3,67 +3,58 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from '@material-ui/icons/Lock';
+import axios from 'axios';
 
+const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8091/'
+});
 const localStorageLoginKey = 'loggedIn';
 
-// Note: custom hook functions need to start with 'use'
-// const useLoginStateWithLocalStorage = () => {
-//     const [value, setValue] = useState(
-//     localStorage.getItem(localStorageLoginKey) || ''
-//     );
-//     useEffect(() => {
-//         localStorage.setItem(localStorageLoginKey, value);
-//     }, [value]);
-//     return [value, setValue];
-// };
-//
-// export const useIsLoggedIn = () => {
-//     const [isLoggedIn] = useLoginStateWithLocalStorage();
-//     return isLoggedIn !== '';
-// };
-//
-// export const useLogin = (cb) => {
-//     const [_, setLoggedIn] = useLoginStateWithLocalStorage();
-//     setTimeout(() => {
-//         setLoggedIn(true);
-//         cb()
-//     }, 100); // fake async
-// };
-//
-// export const useSignout = (cb) => {
-//     const [_, setLoggedIn] = useLoginStateWithLocalStorage();
-//     setTimeout(() => {
-//         setLoggedIn(false);
-//         cb()
-//     }, 100); // fake async
-// };
-
-export function LogoutButton(props) {
-    let history = useHistory();
-
-    return isLoggedIn() ? (
-            <IconButton color="inherit"
-                        onClick={() => {
-                            signOut(() => history.push("/"));
-                        }}>
-                <LockIcon/>
-                <Typography component="h3" variant="h6" color="inherit" noWrap
-                            className={props.className}>
-                    Logout
-                </Typography>
-            </IconButton>)
-        : (<p/>);
-}
-
-export const isLoggedIn = () => {
-    return sessionStorage.getItem(localStorageLoginKey) === 'loggedIn';
+const initialAuthInfo = {
+    basicHash: '',
+    id: '',
+    email: '',
+    vorname: ''
 };
-export const login = (cb) => {
-    sessionStorage.setItem(localStorageLoginKey, 'loggedIn');
-    setTimeout(cb, 100); // fake async
+
+const basicAuthHeaderInternal = (base64Hash) => {
+    return {
+        Authorization: 'Basic ' + base64Hash
+    }
+};
+export const basicAuthHeader = () => {
+    return basicAuthHeaderInternal(JSON.parse(sessionStorage.getItem(localStorageLoginKey)).basicHash)
+};
+
+
+export const getAuthInfo = () => {
+    let item = sessionStorage.getItem(localStorageLoginKey);
+    return item !== null && JSON.parse(item);
+};
+export const isLoggedIn = () => {
+    return getAuthInfo().basicHash !== '';
+};
+export const login = (base64Hash, cb, onError) => {
+    axiosInstance.get("whoami",
+        {
+            headers: basicAuthHeaderInternal(base64Hash)
+        })
+        .then((res) => {
+            const authInfo = {
+                basicHash: base64Hash,
+                id: res.data.id,
+                email: res.data.email,
+                vorname: res.data.vorname
+            };
+            sessionStorage.setItem(localStorageLoginKey, JSON.stringify(authInfo));
+            cb()
+        })
+        .catch((err) => {
+            onError(err)
+        });
 };
 export const signOut = (cb) => {
-    sessionStorage.setItem(localStorageLoginKey, '');
+    sessionStorage.setItem(localStorageLoginKey, JSON.stringify(initialAuthInfo));
     setTimeout(cb, 100);
 };
 
@@ -87,4 +78,21 @@ export function PrivateRoute({children, ...rest}) {
             }
         />
     );
+}
+
+export function LogoutButton(props) {
+    let history = useHistory();
+
+    return isLoggedIn() ? (
+            <IconButton color="inherit"
+                        onClick={() => {
+                            signOut(() => history.push("/"));
+                        }}>
+                <Typography component="h3" variant="h6" color="inherit" noWrap
+                            className={props.className}>
+                    {JSON.parse(sessionStorage.getItem(localStorageLoginKey)).vorname + ' '}
+                </Typography>
+                <LockIcon/>
+            </IconButton>)
+        : (<p/>);
 }

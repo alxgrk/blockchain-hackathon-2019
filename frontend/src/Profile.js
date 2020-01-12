@@ -3,20 +3,17 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Chart from "./Chart";
 import Box from "@material-ui/core/Box";
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
 import Copyright from "./Copyright";
 import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import {basicAuthHeader, getAuthInfo} from "./Auth";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8091/profil/',
-    auth: {
-        username: "User",
-        password: "User"
-    }
+    baseURL: 'http://localhost:8091/'
 });
 
 const useStyles = makeStyles(theme => ({
@@ -118,57 +115,70 @@ const useStyles = makeStyles(theme => ({
 export default function Profile() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-    const [fullname, setFullname] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [geburtsdatum, setGeburtsdatum] = useState(null);
-    const [plz, setPlz] = useState(null);
-    const [ort, setOrt] = useState(null);
-    const [handynummer, setHandynummer] = useState(null);
-    const [profilbeschreibung, setProfilbeschreibung] = useState(null);
+
+    const [profileInfo, setProfileInfo] = useState({
+        fullname: '',
+        email: '',
+        geburtsdatum: '',
+        plz: '',
+        ort: '',
+        handynummer: '',
+        profilbeschreibung: ''
+    });
+
     useEffect(() => {
-        axiosInstance.get("2").then((response)=>{
-            setFullname(response.data.vorname + ' ' + response.data.nachname)
-            setEmail(response.data.email)
-            setGeburtsdatum(response.data.geburtsdatum)
-            setPlz(response.data.plz)
-            setOrt(response.data.ort)
-            setHandynummer(response.data.handynummer)
-            setProfilbeschreibung(response.data.profilbeschreibung)
-        })
+        axiosInstance
+            .get("profil/" + getAuthInfo().id, {
+                headers: basicAuthHeader()
+            })
+            .then((response) => {
+                setProfileInfo({
+                    fullname: response.data.vorname + ' ' + response.data.nachname,
+                    email: response.data.email,
+                    geburtsdatum: response.data.geburtsdatum,
+                    plz: response.data.plz,
+                    ort: response.data.ort,
+                    handynummer: response.data.handynummer,
+                    profilbeschreibung: response.data.profilbeschreibung
+                })
+            })
+            .catch((err) => {
+                console.error(err)
+            });
       });
 
     return (
         <main className={classes.content}>
             <div className={classes.appBarSpacer}/>
             <div className={classes.titlebar}>Ehrenprofil</div>
-            <div className={classes.mainInformation, classes.flex}>
+            <div className={classes.mainInformation + ", " + classes.flex}>
                 <PersonIcon  className={classes.profileIcon}/>
-                <div className={classes.marginRight}>{fullname}</div>
+                <div className={classes.marginRight}>{profileInfo.fullname}</div>
             </div>
             <div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>E-Mail:</div>
-                    <div className={classes.marginRight}>{email}</div>
+                    <div className={classes.marginRight}>{profileInfo.email}</div>
                 </div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>Geburtsdatum:</div>
-                    <div className={classes.marginRight}>{geburtsdatum}</div>
+                    <div className={classes.marginRight}>{profileInfo.geburtsdatum}</div>
                 </div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>Postleitzahl:</div>
-                    <div className={classes.marginRight}>{plz}</div>
+                    <div className={classes.marginRight}>{profileInfo.plz}</div>
                 </div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>Ort:</div>
-                    <div className={classes.marginRight}>{ort}</div>
+                    <div className={classes.marginRight}>{profileInfo.ort}</div>
                 </div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>Handynummer:</div>
-                    <div className={classes.marginRight}>{handynummer}</div>
+                    <div className={classes.marginRight}>{profileInfo.handynummer}</div>
                 </div>
                 <div className={classes.flex}>
                     <div className={classes.marginLeft}>Profilbeschreibung: </div>
-                    <div className={classes.marginRight}>{profilbeschreibung}</div>
+                    <div className={classes.marginRight}>{profileInfo.profilbeschreibung}</div>
                 </div>
             </div>
             <Container maxWidth="lg" className={classes.container}>

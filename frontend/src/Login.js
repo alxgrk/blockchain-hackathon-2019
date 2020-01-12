@@ -11,8 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link, useHistory, useLocation} from "react-router-dom";
-import {fakeAuth, login} from "./Auth";
-
+import {login} from "./Auth";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -40,11 +39,28 @@ export default function Login() {
   let history = useHistory();
   let location = useLocation();
 
+  const [basicAuth, setBasicAuth] = React.useState({
+    email: '',
+    base64Hash: ''
+  });
+
+  const handleEmailChange = event => {
+    setBasicAuth({...basicAuth, email: event.target.value});
+  };
+  const handlePasswordChange = event => {
+    setBasicAuth({...basicAuth, base64Hash: btoa(basicAuth.email + ':' + event.target.value)});
+  };
+
+  const [errorState, setErrorState] = React.useState(false);
   let {from} = location.state || {from: {pathname: "/"}};
   let handleClick = () => {
-    login(() => {
-      history.replace(from);
-    });
+    login(basicAuth.base64Hash,
+        () => {
+          history.replace(from);
+        }, (err) => {
+          setErrorState(true);
+          setTimeout(() => setErrorState(false), 2000)
+        });
   };
 
   return (
@@ -57,39 +73,42 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        {/*<form className={classes.form} noValidate>*/}
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              onChange={handleEmailChange}
+
+              error={errorState}
+              autoComplete="email"
+              autoFocus
           />
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onChange={handlePasswordChange}
+              error={errorState}
+              autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-              // type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              // className={classes.submit}
               onClick={handleClick}
           >
             Sign In
@@ -106,7 +125,7 @@ export default function Login() {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        {/*</form>*/}
       </div>
     </Container>
   );
