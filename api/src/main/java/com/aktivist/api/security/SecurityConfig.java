@@ -1,20 +1,27 @@
 package com.aktivist.api.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
+import static com.aktivist.api.security.BasicAuthFailureEntryPoint.REALM;
+
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    BasicAuthEntryPoint authEntryPoint;
+    private final BasicAuthFailureEntryPoint authEntryPoint;
+
+    private final DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -26,21 +33,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profil/**").hasRole("USER")
                 .and()
                 .httpBasic()
-                .authenticationEntryPoint(authEntryPoint);
+                .realmName(REALM)
+                .authenticationEntryPoint(authEntryPoint)
+                .and()
+                // We don't need sessions to be created.
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
+                //                .jdbcAuthentication().dataSource(dataSource);
                 .inMemoryAuthentication()
-                .withUser("User").password("User").roles("USER")
+                .withUser("User").password(getPasswordEncoder().encode("User")).roles("USER")
                 .and()
-                .withUser("Verein").password("Verein").roles("VEREIN");
+                .withUser("Verein").password(getPasswordEncoder().encode("Verein")).roles("VEREIN");
 
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 }
