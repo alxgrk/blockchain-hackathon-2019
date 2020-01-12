@@ -8,10 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.sql.DataSource;
 
 import static com.aktivist.api.security.BasicAuthFailureEntryPoint.REALM;
 
@@ -21,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BasicAuthFailureEntryPoint authEntryPoint;
 
-    private final DataSource dataSource;
+    private final DbBackedUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -43,17 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                //                .jdbcAuthentication().dataSource(dataSource);
-                .inMemoryAuthentication()
-                .withUser("User").password(getPasswordEncoder().encode("User")).roles("USER")
-                .and()
-                .withUser("Verein").password(getPasswordEncoder().encode("Verein")).roles("VEREIN");
-
+        auth.userDetailsService(userDetailsService);
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 }

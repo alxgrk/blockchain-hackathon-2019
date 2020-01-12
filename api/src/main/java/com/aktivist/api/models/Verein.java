@@ -1,6 +1,7 @@
 package com.aktivist.api.models;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,19 +9,25 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Vereine")
 @Data
-public class Verein {
-
-    private static final Gson GSON = new Gson();
+public class Verein implements Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    // treated equivalent to a username
+    @JsonIgnore
+    @Transient
+    @Override
+    // email is being treated as username
+    public String getUsername() {
+        return email;
+    }
+
     @Column(nullable = false, unique = true)
     private String email;
 
-    private String password_hash;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     private String vereinsname;
 
@@ -31,9 +38,5 @@ public class Verein {
     private long handynummer;
 
     private String beschreibung;
-
-    public String getDataAsJson(){
-        return GSON.toJson(this);
-    }
 
 }
