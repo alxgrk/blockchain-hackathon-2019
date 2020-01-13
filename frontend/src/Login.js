@@ -31,6 +31,9 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  belowButtons: {
+    textAlign: "center"
+  }
 }));
 
 export default function Login() {
@@ -83,7 +86,6 @@ export default function Login() {
               label="Email Address"
               name="email"
               onChange={handleEmailChange}
-
               error={errorState}
               autoComplete="email"
               autoFocus
@@ -113,16 +115,16 @@ export default function Login() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link to={"#"} variant="body2">
+          <Grid className={classes.belowButtons} container spacing={1}>
+            <Grid item xs={6}>
+              <Button variant="text" size="small" component={Link} to={"#"}>
                 Forgot password?
-              </Link>
+              </Button>
             </Grid>
-            <Grid item>
-              <Link to={"#"} variant="body2">
+            <Grid item xs={6}>
+              <Button variant="text" size="small" component={Link} to={"/register"}>
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </Button>
             </Grid>
           </Grid>
         {/*</form>*/}

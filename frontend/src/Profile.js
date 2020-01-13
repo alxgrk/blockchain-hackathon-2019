@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Chart from "./Chart";
 import Box from "@material-ui/core/Box";
 import React, {useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
 import Copyright from "./Copyright";
@@ -116,6 +117,8 @@ export default function Profile() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+    let history = useHistory();
+
     const [profileInfo, setProfileInfo] = useState({
         fullname: '',
         email: '',
@@ -143,9 +146,9 @@ export default function Profile() {
                 })
             })
             .catch((err) => {
-                console.error(err)
+                console.error("Profil error: " + JSON.stringify(err))
             });
-      });
+    }, []);
 
     return (
         <main className={classes.content}>
@@ -191,7 +194,10 @@ export default function Profile() {
                     </Grid>
                 </Grid>
                 <div className={classes.flexDiv}>
-                    <Button className={classes.button}>Auszeichnungen</Button>
+                    <Button className={classes.button}
+                            onClick={() => {
+                                history.push({pathname: "/auszeichnungen"})
+                            }}>Auszeichnungen</Button>
                 </div>
                 <Box pt={4}>
                     <Copyright/>

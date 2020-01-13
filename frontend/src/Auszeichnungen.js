@@ -27,8 +27,6 @@ import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import PetsIcon from '@material-ui/icons/Pets';
 import axios from "axios";
 
-
-
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -106,13 +104,13 @@ export default function Auszeichnungen() {
     axios.get("http://localhost:9876/api/Benutzer/3876").then((response)=>{
       setAuszeichnungen(response.data.zertifikate)
     })
-  });
+  }, []);
   useEffect(() => {
     axios.get("http://localhost:9876/api/Konto/6659").then((response)=>{
       setEhrentaler(response.data.ehrentaler)
       setEhrenpunkte(response.data.ehrenpunkte)
     })
-  });
+  }, []);
 
   return (
     <Container component="main" maxWidth="xs">

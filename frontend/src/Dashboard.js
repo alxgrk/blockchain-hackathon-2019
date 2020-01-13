@@ -19,6 +19,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import {mainListItems} from "./listItems";
 import Drawer from "@material-ui/core/Drawer";
+import Registration from "./Registration";
 
 const drawerWidth = 240;
 
@@ -168,6 +169,9 @@ export default function Dashboard() {
                     <PrivateRoute exact path="/">
                         <Redirect to="/finder"/>
                     </PrivateRoute>
+                    <Route path="/register">
+                        <Registration/>
+                    </Route>
                     <Route path="/login">
                         <Login/>
                     </Route>

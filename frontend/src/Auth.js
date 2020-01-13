@@ -23,16 +23,26 @@ const basicAuthHeaderInternal = (base64Hash) => {
     }
 };
 export const basicAuthHeader = () => {
-    return basicAuthHeaderInternal(JSON.parse(sessionStorage.getItem(localStorageLoginKey)).basicHash)
+    return basicAuthHeaderInternal(JSON.parse(localStorage.getItem(localStorageLoginKey)).basicHash)
 };
 
 
 export const getAuthInfo = () => {
-    let item = sessionStorage.getItem(localStorageLoginKey);
-    return item !== null && JSON.parse(item);
+    let item = localStorage.getItem(localStorageLoginKey);
+    return item !== null ? JSON.parse(item) : initialAuthInfo;
 };
 export const isLoggedIn = () => {
     return getAuthInfo().basicHash !== '';
+};
+export const register = (profilInfo, cb, onRegistrationError, onLoginError) => {
+    axiosInstance.post("profil", profilInfo)
+        .then(() => {
+            login(btoa(profilInfo.email + ':' + profilInfo.password), cb, onLoginError)
+        })
+        .catch((err) => {
+            console.error("Registration error: " + JSON.stringify(err));
+            onRegistrationError(err)
+        });
 };
 export const login = (base64Hash, cb, onError) => {
     axiosInstance.get("whoami",
@@ -46,15 +56,16 @@ export const login = (base64Hash, cb, onError) => {
                 email: res.data.email,
                 vorname: res.data.vorname
             };
-            sessionStorage.setItem(localStorageLoginKey, JSON.stringify(authInfo));
+            localStorage.setItem(localStorageLoginKey, JSON.stringify(authInfo));
             cb()
         })
         .catch((err) => {
+            console.error("Login error: " + JSON.stringify(err));
             onError(err)
         });
 };
 export const signOut = (cb) => {
-    sessionStorage.setItem(localStorageLoginKey, JSON.stringify(initialAuthInfo));
+    localStorage.setItem(localStorageLoginKey, JSON.stringify(initialAuthInfo));
     setTimeout(cb, 100);
 };
 
@@ -90,7 +101,7 @@ export function LogoutButton(props) {
                         }}>
                 <Typography component="h3" variant="h6" color="inherit" noWrap
                             className={props.className}>
-                    {JSON.parse(sessionStorage.getItem(localStorageLoginKey)).vorname + ' '}
+                    {getAuthInfo().vorname !== '' ? getAuthInfo().vorname + ' ' : 'Logout '}
                 </Typography>
                 <LockIcon/>
             </IconButton>)

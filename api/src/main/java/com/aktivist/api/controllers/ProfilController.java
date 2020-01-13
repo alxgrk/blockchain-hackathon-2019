@@ -5,10 +5,10 @@ import com.aktivist.api.services.DbHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,10 +34,25 @@ public class ProfilController {
 
     @CrossOrigin
     @PostMapping("profil")
-    public ResponseEntity<User> createProfil(@RequestBody User user) {
+    public ResponseEntity<?> createProfil(@RequestBody User user) {
+        if (!isValid(user)) {
+            return new ResponseEntity<>(
+                    Collections.singletonMap("message", "Posted user invalid."),
+                    HttpStatus.BAD_REQUEST);
+        }
 
         return dbHelper.getUserByEmail(user.getEmail())
                 .map(existingUser -> new ResponseEntity<>(existingUser, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(dbHelper.saveUser(user), HttpStatus.CREATED));
+    }
+
+    private boolean isValid(User user) {
+        return !StringUtils.isEmpty(user.getEmail())
+                && !StringUtils.isEmpty(user.getPassword())
+                && !StringUtils.isEmpty(user.getVorname())
+                && !StringUtils.isEmpty(user.getNachname())
+                && !StringUtils.isEmpty(user.getGeburtsdatum())
+                && !StringUtils.isEmpty(user.getOrt());
+
     }
 }
