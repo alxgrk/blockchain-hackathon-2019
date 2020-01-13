@@ -2,20 +2,19 @@ package com.aktivist.api.services;
 
 import com.aktivist.api.models.*;
 import com.aktivist.api.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DbHelper {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private VereinRepository vereinRepository;
+    private final VereinRepository vereinRepository;
 
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
@@ -23,6 +22,14 @@ public class DbHelper {
 
     public Optional<User> getUserById(long id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmailIgnoreCase(email);
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
     public Iterable<Verein> getAllVereine() {

@@ -2,27 +2,42 @@ package com.aktivist.api.controllers;
 
 import com.aktivist.api.models.User;
 import com.aktivist.api.services.DbHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class ProfilController {
 
-    @Autowired
-    DbHelper dbHelper;
+    private final DbHelper dbHelper;
 
     @CrossOrigin
-    @RequestMapping("profil")
+    @GetMapping("profil")
     public Iterable<User> getProfile() {
         return dbHelper.getAllUsers();
     }
 
     @CrossOrigin
-    @RequestMapping("profil/{id}")
-    public User getProfil(@PathVariable("id") long id) {
-        return dbHelper.getUserById(id).get();
+    @GetMapping("profil/{id}")
+    public ResponseEntity<?> getProfil(@PathVariable("id") long id) {
+        return dbHelper.getUserById(id)
+                .map(user -> (ResponseEntity) new ResponseEntity<>(user, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(
+                        Collections.singletonMap("message", "User with id '" + id + "' not found."),
+                        HttpStatus.NOT_FOUND));
+    }
+
+    @CrossOrigin
+    @PostMapping("profil")
+    public ResponseEntity<User> createProfil(@RequestBody User user) {
+
+        return dbHelper.getUserByEmail(user.getEmail())
+                .map(existingUser -> new ResponseEntity<>(existingUser, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(dbHelper.saveUser(user), HttpStatus.CREATED));
     }
 }
