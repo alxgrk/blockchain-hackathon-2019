@@ -8,18 +8,18 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {LogoutButton, PrivateRoute} from "./auth/Auth";
 import Finder from "./routes/Finder";
 import Profile from "./routes/Profile";
 import Auszeichnungen from "./routes/Auszeichnungen";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import EngagementType from "./routes/EngagementType";
 import Login from "./routes/Login";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Registration from "./routes/Registration";
 import NavBar from "./ui-components/NavBar";
+import PrivateRoute from "./auth/PrivateRoute";
+import LogoutButton from "./auth/LogoutButton";
 
 const drawerWidth = 240;
 

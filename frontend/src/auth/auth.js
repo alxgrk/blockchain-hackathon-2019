@@ -1,8 +1,4 @@
-import {Redirect, Route, useHistory} from "react-router-dom";
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import LockIcon from '@material-ui/icons/Lock';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
@@ -69,41 +65,4 @@ export const signOut = (cb) => {
     setTimeout(cb, 100);
 };
 
-// A wrapper for <Route> that redirects to the login
-// screen if you're not yet authenticated.
-export function PrivateRoute({children, ...rest}) {
-    return (
-        <Route
-            {...rest}
-            render={({location}) =>
-                isLoggedIn() ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/login",
-                            state: {from: location}
-                        }}
-                    />
-                )
-            }
-        />
-    );
-}
 
-export function LogoutButton(props) {
-    let history = useHistory();
-
-    return isLoggedIn() ? (
-            <IconButton color="inherit"
-                        onClick={() => {
-                            signOut(() => history.push("/"));
-                        }}>
-                <Typography component="h3" variant="h6" color="inherit" noWrap
-                            className={props.className}>
-                    {getAuthInfo().vorname !== '' ? getAuthInfo().vorname + ' ' : 'Logout '}
-                </Typography>
-                <LockIcon/>
-            </IconButton>)
-        : (<p/>);
-}
