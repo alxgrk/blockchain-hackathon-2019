@@ -1,7 +1,7 @@
 import {useHistory} from "react-router";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import LockIcon from "@material-ui/core/SvgIcon";
+import LockIcon from "@material-ui/icons/Lock";
 import React from "react";
 import {getAuthInfo, isLoggedIn, signOut} from "./service";
 

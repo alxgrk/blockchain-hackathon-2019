@@ -9,10 +9,11 @@ import PeopleIcon from '@material-ui/icons/People';
 import List from "@material-ui/core/List";
 import logo from '../static/images/logo.jpg';
 import {Link} from "react-router-dom";
+import {func} from "prop-types";
 
-export default function NavBar() {
+export default function NavBar(props) {
     return (
-        <List>
+        <List onClick={props.closeDrawer}>
             <div>
                 <ListItem button component={Link} to="/finder">
                     <ListItemIcon>
@@ -46,3 +47,7 @@ export default function NavBar() {
             </div>
         </List>);
 }
+
+NavBar.propTypes = {
+    closeDrawer: func,
+};

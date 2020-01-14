@@ -150,7 +150,7 @@ export default function App() {
                         </IconButton>
                     </div>
                     <Divider/>
-                    <NavBar/>
+                    <NavBar closeDrawer={handleDrawerClose} />
                 </Drawer>
 
                 <Switch>
