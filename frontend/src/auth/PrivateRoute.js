@@ -1,6 +1,6 @@
 import {Redirect, Route} from "react-router";
 import React from "react";
-import {isLoggedIn} from "./Auth";
+import {isLoggedIn} from "./service";
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.

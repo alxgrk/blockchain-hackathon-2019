@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import LockIcon from "@material-ui/core/SvgIcon";
 import React from "react";
-import {getAuthInfo, isLoggedIn, signOut} from "./Auth";
+import {getAuthInfo, isLoggedIn, signOut} from "./service";
 
 export default function LogoutButton(props) {
     let history = useHistory();

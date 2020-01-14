@@ -11,7 +11,7 @@ import Copyright from "../ui-components/Copyright";
 import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import {basicAuthHeader, getAuthInfo} from "../auth/Auth";
+import {basicAuthHeader, getAuthInfo} from "../auth/service";
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8091/'

@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link, useHistory, useLocation} from "react-router-dom";
-import {login} from "../auth/Auth";
+import {login} from "../auth/service";
 
 const useStyles = makeStyles(theme => ({
   paper: {
