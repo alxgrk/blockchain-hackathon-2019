@@ -1,12 +1,12 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Chart from "./Chart";
+import Chart from "../ui-components/Chart";
 import Box from "@material-ui/core/Box";
 import React from "react";
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
-import Copyright from "./Copyright";
+import Copyright from "../ui-components/Copyright";
 import Iframe from "react-iframe";
 
 const useStyles = makeStyles(theme => ({
@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Finder() {
+export default function EngagementType() {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -73,7 +73,7 @@ export default function Finder() {
                     {/* Chart */}
                     <Grid item xs={12} md={8} lg={9}>
                         <Iframe
-                            url="https://www.aktion-mensch.de/was-du-tun-kannst/deine-moeglichkeiten/ehrenamt-finden.html"
+                            url="https://www.aktion-mensch.de/was-du-tun-kannst/deine-moeglichkeiten/engagement-finder.html"
                             width="95%"
                             height="500px"
                             id="myId"

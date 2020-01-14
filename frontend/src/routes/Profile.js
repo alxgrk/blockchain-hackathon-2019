@@ -1,17 +1,17 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Chart from "./Chart";
+import Chart from "../ui-components/Chart";
 import Box from "@material-ui/core/Box";
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {makeStyles} from "@material-ui/core";
 import clsx from "clsx";
-import Copyright from "./Copyright";
+import Copyright from "../ui-components/Copyright";
 import PersonIcon from '@material-ui/icons/Person';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import {basicAuthHeader, getAuthInfo} from "./Auth";
+import {basicAuthHeader, getAuthInfo} from "../auth/Auth";
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:8091/'
