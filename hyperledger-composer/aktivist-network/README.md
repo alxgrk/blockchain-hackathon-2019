@@ -1,3 +1,0 @@
-# aktivist-network
-
-Developer tutorial.

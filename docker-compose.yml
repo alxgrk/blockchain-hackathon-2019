@@ -34,14 +34,15 @@ services:
     network_mode: host
 
   blockchain:
-    build: hyperledger-composer/
+    build: blockchain/
     ports:
     - "8080:8080"
     - "9876:9876"
     network_mode: host
     volumes:
-    - ./hyperledger-composer/fabric-scripts/hlfv12/composer/crypto-config/:/hyperledger-fabric/crypto-config
-    - ./hyperledger-composer/the-aktivist-network/:/hyperledger-fabric/the-aktivist-network
+    - ./blockchain/fabric-scripts/hlfv12/composer/crypto-config/:/hyperledger-fabric/crypto-config
+    - ./blockchain/the-aktivist-network/lib/:/hyperledger-fabric/the-aktivist-network/lib/
+    - ./blockchain/the-aktivist-network/models/:/hyperledger-fabric/the-aktivist-network/models/
     - network-admin-cards:/hyperledger-fabric/admin-cards/
     - /hyperledger-fabric/node_modules
     - /root/.npm
