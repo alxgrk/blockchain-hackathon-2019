@@ -51,7 +51,7 @@ Install network:
 
 ```
 cd ..
-cd hyperledger-composer/the-aktivist-network
+cd blockchain/the-aktivist-network
 ./composer network install --card PeerAdmin@hlfv1 --archiveFile the-aktivist-network@0.0.1.bna
 ```
 
