@@ -1,3 +1,4 @@
 node_modules
 the-aktivist-network/*.bna
 the-aktivist-network/*.card
+.dockerenv

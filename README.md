@@ -1,9 +1,28 @@
 # blockchain-hackathon-2019
 
+To run everything, just call `./start.sh {{github-username}} {{github-personal-access-token}}` or `./start.sh {{github-username}}` if you have stored the Github PAT (for more information see section below) in a file called `.dockerenv`.
+
+Example call:
+```
+./start.sh alxgrk
+```
+
+Otherwise, follow below instructions.
+
+# Preparation
+
+Before you are able to start all services (especially `blockchain` service), you need to login to the Github Docker Registry.
+
+Do so by running `docker login docker.pkg.github.com -u {{github-username}} -p {{github-personal-access-token}}`.
+
+Note: make sure to create a Personal Access Token (PAT) before. This can be done [here](https://github.com/settings/tokens/new) by selecting "write:packages" scope.
+
+Additionally, you need to create the common network for hyperledger-fabric and all other services by running `docker network create --label com.docker.compose.network=default --label com.docker.compose.project=blockchain_hackathon --label com.docker.compose.version=1.24.1 --attachable blockchain_hackathon`.
+
 # Start all services
 
 ```
-docker-compose -f hyperledger-fabric/docker-compose.yml up -d && docker-compose up -d
+docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up -d
 ```
 
 # Updating blockchain code
@@ -15,15 +34,15 @@ docker-compose exec blockchain /hyperledger-fabric/the-aktivist-network/upgrade.
 # Recreate services after changing something
 
 ```
-docker-compose up -d --build {{service-name}}
-# or
-docker-compose -f hyperledger-fabric/docker-compose.yml up --force-recreate -d
+docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up -d --build {{service-name}}
+# or for all hyperledger-related services (`peer0.org1.example.com`, `couchdb`, `orderer.example.com`, `ca.org1.example.com` and `blockchain`)
+docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up -d --force-recreate {{service-name}}
 ```
 
 # Stop and clean all services
 
 ```
-docker-compose -f hyperledger-fabric/docker-compose.yml down && docker-compose down
+docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml down
 ```
 
 # Problem recovery

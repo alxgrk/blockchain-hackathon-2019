@@ -14,6 +14,12 @@ fi
 composer card import --file /hyperledger-fabric/admin-cards/PeerAdmin@hlfv1.card
 rm /tmp/PeerAdmin@hlfv1.card
 
+#while [ $(composer network ping -c PeerAdmin@hlfv1 > /dev/null; echo $?) -ne 0 ]
+#do
+#    echo "Waiting for Hyperledger-Fabric to come up..."
+#    sleep 10
+#done
+
 # create and install archive
 cd /hyperledger-fabric/the-aktivist-network
 if ! composer network list -c admin@the-aktivist-network > /dev/null;
@@ -26,8 +32,10 @@ then
 fi
 composer card import --file /hyperledger-fabric/admin-cards/the-aktivist-network-admin.card
 
+nohup composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
+
 # upgrade once in the beginning
 /hyperledger-fabric/the-aktivist-network/upgrade.sh
 
-nohup composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
 composer-playground
+

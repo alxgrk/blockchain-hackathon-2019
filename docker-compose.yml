@@ -9,7 +9,6 @@ services:
     - /root/.npm
     ports:
     - '3000:3000'
-    network_mode: host
     environment:
     - NODE_ENV=development
 
@@ -17,7 +16,6 @@ services:
     build: api/
     ports: 
     - "8090:8090"
-    network_mode: host
     depends_on:
     - postgres
 
@@ -31,14 +29,17 @@ services:
     - db-data:/var/lib/postgresql/data
     ports:
     - "5432:5432"
-    network_mode: host
 
   blockchain:
-    build: blockchain/
+    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain
+    #build: ./blockchain/
     ports:
     - "8080:8080"
     - "9876:9876"
-    network_mode: host
+    external_links:
+    - peer0.org1.example.com:peer0
+    - ca.org1.example.com:ca
+    - orderer.example.com:orderer
     volumes:
     - ./blockchain/fabric-scripts/hlfv12/composer/crypto-config/:/hyperledger-fabric/crypto-config
     - ./blockchain/the-aktivist-network/lib/:/hyperledger-fabric/the-aktivist-network/lib/
@@ -46,6 +47,11 @@ services:
     - network-admin-cards:/hyperledger-fabric/admin-cards/
     - /hyperledger-fabric/node_modules
     - /root/.npm
+
+networks:
+  default: 
+    external:
+     name: blockchain_hackathon
 
 volumes:
   db-data:

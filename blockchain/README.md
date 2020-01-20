@@ -4,7 +4,21 @@ Below steps are done for you, when you are using the Dockerfile.
 
 ## Do things using docker
 
-Upgrade network
+### Build and publish the image
+```
+./buildAndPublish {{github-username}} {{version}} {{personal-access-token}}
+
+e.g.
+./buildAndPublish alxgrk 1.0.0 123123123123123123123123
+```
+Note: make sure to create a Personal Access Token (PAT) before. This can be done [here](https://github.com/settings/tokens/new) by selecting "write:packages" scope.
+You can also omit the third parameter and place the PAT in a file called `.dockerenv` like so:
+```
+# Github Personal Access Token
+GITHUB_PAT=...
+```
+
+### Upgrade network
 ```
 docker exec -t {{container_id}} /hyperledger-fabric/the-aktivist-network/upgrade.sh
 ```
