@@ -33,7 +33,7 @@ services:
     - "5432:5432"
 
   blockchain:
-    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain
+    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain:1.0.5
     #build: ./blockchain/
     ports:
     - "8080:8080"

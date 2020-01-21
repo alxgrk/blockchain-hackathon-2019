@@ -32,8 +32,7 @@ checkParams
 docker login docker.pkg.github.com -u $USERNAME -p $GITHUB_PAT
 
 # build image with github tag (and latest)
-docker build -t docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:$VERSION -t docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:latest .
+docker build -t docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:$VERSION .
 
 # publish
 docker push docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:$VERSION
-docker push docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:latest
