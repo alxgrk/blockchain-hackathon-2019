@@ -36,3 +36,6 @@ docker build -t docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:$VERSION .
 
 # publish
 docker push docker.pkg.github.com/$OWNER/$REPOSITORY/$NAME:$VERSION
+
+# update version in docker-compose
+sed -i "s|blockchain:[0-9]\.[0-9]\.[0-9]|blockchain:$VERSION|" ../docker-compose.yml
