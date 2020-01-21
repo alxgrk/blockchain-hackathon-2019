@@ -1,4 +1,8 @@
 INSERT INTO Users(email, password, vorname, nachname, geburtsdatum, plz, ort, handynummer, profilbeschreibung )
+VALUES('admin', 'admin', 'Admin', 'Admin', '1986-06-23', 1203, 'Leipzig', 555123123,
+'Admin.');
+
+INSERT INTO Users(email, password, vorname, nachname, geburtsdatum, plz, ort, handynummer, profilbeschreibung )
 VALUES('Max.Mustermann@Email.com', '123dwA6787dA8sd', 'Max', 'Mustermann', '1986-06-23', 1203, 'Leipzig', 555123123,
 'Ich bin jung und für alles zu haben.');
 INSERT INTO Users(email, password, vorname, nachname, geburtsdatum, plz, ort, handynummer, profilbeschreibung )
