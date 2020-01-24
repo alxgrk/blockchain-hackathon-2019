@@ -4,21 +4,21 @@ namespace org.uni.leipzig.aktivist
 /**
   Assets
  */
-asset Konto identified by id {
-  o String id
-  o Integer ehrentaler
-  o Integer ehrenpunkte
-}
 asset Aktivitaet identified by id {
   o String id
   o String name
+  o String beschreibung
   --> Benutzer benutzer
 }
 asset Zertifikat identified by id {
   o String id
+  o String name
+  o String beschreibung
 }
 asset Benefit identified by id {
   o String id
+  o String name
+  o String beschreibung
 }
 
 /**
@@ -51,7 +51,8 @@ participant Verein identified by akteurId {
 }
 participant Benutzer identified by akteurId { 
     o String akteurId
-    --> Konto konto
+    o Integer ehrentaler
+    o Integer ehrenpunkte
     --> Aktivitaet[] aktivitaeten
     --> Zertifikat[] zertifikate
     --> Benefit[] benefits

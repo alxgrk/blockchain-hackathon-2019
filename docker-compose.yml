@@ -33,7 +33,7 @@ services:
     - "5432:5432"
 
   blockchain:
-    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain:1.0.5
+    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain:1.0.7
     #build: ./blockchain/
     ports:
     - "8080:8080"
@@ -44,8 +44,8 @@ services:
     - orderer.example.com:orderer
     volumes:
     - ./blockchain/fabric-scripts/hlfv12/composer/crypto-config/:/hyperledger-fabric/crypto-config
-    - ./blockchain/the-aktivist-network/lib/:/hyperledger-fabric/the-aktivist-network/lib/
-    - ./blockchain/the-aktivist-network/models/:/hyperledger-fabric/the-aktivist-network/models/
+    - ./blockchain/the-aktivist-network/lib/:/hyperledger-fabric/the-aktivist-network/lib
+    - ./blockchain/the-aktivist-network/models/:/hyperledger-fabric/the-aktivist-network/models
     - network-admin-cards:/hyperledger-fabric/admin-cards/
     - /hyperledger-fabric/node_modules
     - /root/.npm

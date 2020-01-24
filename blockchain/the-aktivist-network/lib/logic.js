@@ -6,16 +6,16 @@
 async function aktivitaetErfuellt(event) {
 
     /**
-     * Update konto
+     * Update taler and punkte
      */
-    let konto = event.benutzer.konto;
+    let benutzer = event.benutzer;
 
-    konto.ehrentaler += event.ehrentaler
-    konto.ehrenpunkte += event.ehrenpunkte
+    benutzer.ehrentaler += event.ehrentaler
+    benutzer.ehrenpunkte += event.ehrenpunkte
 
-    let kontoAssetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Konto');
+    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
 
-    await kontoAssetRegistry.update(konto);
+    await benutzerRegistry.update(benutzer);
 
     /**
      * Aktivitaet
@@ -26,7 +26,6 @@ async function aktivitaetErfuellt(event) {
     let benutzerAktivitaeten = event.benutzer.aktivitaeten
     benutzerAktivitaeten.push(aktivitaet)
 
-    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
     let aktivitaetenAssetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Aktivitaet');
 
     await benutzerRegistry.update(event.benutzer)
@@ -56,15 +55,15 @@ async function zertifikateErhalten(event) {
  */
 async function ehrentalerAusgegeben(event) {
     /**
-     * Update konto
+     * Update taler
      */
-    let konto = event.benutzer.konto;
+    let benutzer = event.benutzer;
 
-    konto.ehrentaler -= event.ehrentaler
+    benutzer.ehrentaler -= event.ehrentaler
 
-    let kontoAssetRegistry = await getAssetRegistry('org.uni.leipzig.aktivist.Konto');
+    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
 
-    await kontoAssetRegistry.update(konto);
+    await benutzerRegistry.update(benutzer);
 
     /**
      * Update benefits
@@ -73,8 +72,6 @@ async function ehrentalerAusgegeben(event) {
     
     let benefit = event.benefit
     benutzerBenefits.push(benefit)
-
-    let benutzerRegistry = await getParticipantRegistry('org.uni.leipzig.aktivist.Benutzer');
 
     await benutzerRegistry.update(event.benutzer)
 }

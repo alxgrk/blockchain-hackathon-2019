@@ -11,10 +11,11 @@ ADD fabric-scripts /hyperledger-fabric/fabric-scripts/
 ADD *.sh /hyperledger-fabric/
 ADD package.json DevServer_connection.json /hyperledger-fabric/
 
-ADD the-aktivist-network/features /hyperledger-fabric/the-aktivist-network/features/
-ADD the-aktivist-network/lib /hyperledger-fabric/the-aktivist-network/lib/
-ADD the-aktivist-network/models /hyperledger-fabric/the-aktivist-network/models/
-ADD the-aktivist-network/test /hyperledger-fabric/the-aktivist-network/test/
+ADD the-aktivist-network/features/* /hyperledger-fabric/the-aktivist-network/features/
+ADD the-aktivist-network/test/* /hyperledger-fabric/the-aktivist-network/test/
+# lib and models are provided on-the-fly as docker-compose volumes
+ADD the-aktivist-network/lib/* /hyperledger-fabric/the-aktivist-network/lib/
+ADD the-aktivist-network/models/* /hyperledger-fabric/the-aktivist-network/models/
 ADD the-aktivist-network/package.json the-aktivist-network/permissions.acl the-aktivist-network/README.md the-aktivist-network/upgrade.sh /hyperledger-fabric/the-aktivist-network/
 
 RUN npm install
