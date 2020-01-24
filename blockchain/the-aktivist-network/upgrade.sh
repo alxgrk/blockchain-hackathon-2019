@@ -12,4 +12,4 @@ composer network upgrade -n the-aktivist-network -V ${NEW_VERSION} -c PeerAdmin@
 
 # restart rest server
 ps -ef | grep [c]omposer-rest-server | awk '{print $2}' | xargs kill
-nohup composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876 &
+composer-rest-server -c admin@the-aktivist-network -n never -d n -w true -p 9876

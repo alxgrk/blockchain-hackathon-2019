@@ -28,7 +28,7 @@ docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up
 # Updating blockchain code
 
 ```
-docker-compose exec blockchain /hyperledger-fabric/the-aktivist-network/upgrade.sh
+docker-compose exec -d blockchain /hyperledger-fabric/the-aktivist-network/upgrade.sh
 ```
 
 # Recreate services after changing something
