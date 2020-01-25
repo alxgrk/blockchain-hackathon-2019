@@ -51,11 +51,11 @@ participant Verein identified by akteurId {
 }
 participant Benutzer identified by akteurId { 
     o String akteurId
-    o Integer ehrentaler
-    o Integer ehrenpunkte
-    --> Aktivitaet[] aktivitaeten
-    --> Zertifikat[] zertifikate
-    --> Benefit[] benefits
+    o Integer ehrentaler default=0
+    o Integer ehrenpunkte default=0
+    --> Aktivitaet[] aktivitaeten optional
+    --> Zertifikat[] zertifikate optional
+    --> Benefit[] benefits optional
 }
 participant Sponsor identified by akteurId { 
     o String akteurId

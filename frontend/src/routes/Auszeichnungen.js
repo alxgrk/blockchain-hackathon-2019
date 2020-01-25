@@ -1,31 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
-import ThreeDRotation from '@material-ui/icons/ThreeDRotation';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import SearchIcon from '@material-ui/icons/Search';
-import Title from '../ui-components/Title';
-import { useTheme } from '@material-ui/core/styles';
 import Copyright from "../ui-components/Copyright";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import SportsSoccerIcon from '@material-ui/icons/SportsSoccer';
 import PetsIcon from '@material-ui/icons/Pets';
 import axios from "axios";
+import {getAuthInfo} from "../auth/service";
+
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:9876/'
+});
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -100,16 +87,30 @@ export default function Auszeichnungen() {
   const [ehrentaler, setEhrentaler] = useState(null);
   const [ehrenpunkte, setEhrenpunkte] = useState(null);
   const [auszeichnungen, setAuszeichnungen] = useState(null);
+
+  const userId = getAuthInfo().id;
   useEffect(() => {
-    axios.get("http://localhost:9876/api/Benutzer/3876").then((response)=>{
-      setAuszeichnungen(response.data.zertifikate)
-    })
-  }, []);
-  useEffect(() => {
-    axios.get("http://localhost:9876/api/Konto/6659").then((response)=>{
-      setEhrentaler(response.data.ehrentaler)
-      setEhrenpunkte(response.data.ehrenpunkte)
-    })
+
+    function getUser() {
+      return axiosInstance.get("api/Benutzer/" + userId)
+          .then(response => {
+            setEhrentaler(response.data.ehrentaler);
+            setEhrenpunkte(response.data.ehrenpunkte);
+            setAuszeichnungen(response.data.zertifikate)
+          });
+    }
+
+    getUser()
+        .catch(err => {
+          if (err.response.status === 404) {
+            axiosInstance.post("api/Benutzer",
+                {
+                  $class: "org.uni.leipzig.aktivist.Benutzer",
+                  akteurId: userId
+                })
+                .then(_ => getUser())
+          }
+        })
   }, []);
 
   return (
