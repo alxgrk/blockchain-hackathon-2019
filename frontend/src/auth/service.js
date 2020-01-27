@@ -10,7 +10,8 @@ const initialAuthInfo = {
     basicHash: '',
     id: '',
     email: '',
-    vorname: ''
+    name: '',
+    isVerein: false
 };
 
 const basicAuthHeaderInternal = (base64Hash) => {
@@ -50,7 +51,8 @@ export const login = (base64Hash, cb, onError) => {
                 basicHash: base64Hash,
                 id: res.data.id,
                 email: res.data.email,
-                vorname: res.data.vorname
+                name: res.data.vorname !== undefined ? res.data.vorname : res.data.vereinsname,
+                isVerein: res.data.vorname === undefined
             };
             localStorage.setItem(localStorageLoginKey, JSON.stringify(authInfo));
             cb()

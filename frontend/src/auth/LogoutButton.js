@@ -15,7 +15,7 @@ export default function LogoutButton(props) {
                         }}>
                 <Typography component="h3" variant="h6" color="inherit" noWrap
                             className={props.className}>
-                    {getAuthInfo().vorname !== '' ? getAuthInfo().vorname + ' ' : 'Logout '}
+                    {getAuthInfo().name !== '' ? getAuthInfo().name + ' ' : 'Logout '}
                 </Typography>
                 <LockIcon/>
             </IconButton>)

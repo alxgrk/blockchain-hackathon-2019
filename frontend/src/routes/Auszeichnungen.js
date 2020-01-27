@@ -84,9 +84,9 @@ export default function Auszeichnungen() {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [ehrentaler, setEhrentaler] = useState(null);
-  const [ehrenpunkte, setEhrenpunkte] = useState(null);
-  const [auszeichnungen, setAuszeichnungen] = useState(null);
+  const [ehrentaler, setEhrentaler] = useState(0);
+  const [ehrenpunkte, setEhrenpunkte] = useState(0);
+  const [auszeichnungen, setAuszeichnungen] = useState([]);
 
   const userId = getAuthInfo().id;
   useEffect(() => {
@@ -100,17 +100,18 @@ export default function Auszeichnungen() {
           });
     }
 
-    getUser()
-        .catch(err => {
-          if (err.response.status === 404) {
-            axiosInstance.post("api/Benutzer",
-                {
-                  $class: "org.uni.leipzig.aktivist.Benutzer",
-                  akteurId: userId
-                })
-                .then(_ => getUser())
-          }
-        })
+    if (!getAuthInfo().isVerein)
+      getUser()
+          .catch(err => {
+            if (err.response.status === 404) {
+              axiosInstance.post("api/Benutzer",
+                  {
+                    $class: "org.uni.leipzig.aktivist.Benutzer",
+                    akteurId: userId
+                  })
+                  .then(_ => getUser())
+            }
+          })
   }, []);
 
   return (

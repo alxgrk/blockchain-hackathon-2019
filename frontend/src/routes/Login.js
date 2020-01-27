@@ -60,7 +60,7 @@ export default function Login() {
     login(basicAuth.base64Hash,
         () => {
           history.replace(from);
-        }, (err) => {
+        }, _ => {
           setErrorState(true);
           setTimeout(() => setErrorState(false), 2000)
         });

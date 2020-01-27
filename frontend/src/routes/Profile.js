@@ -126,29 +126,55 @@ export default function Profile() {
         plz: '',
         ort: '',
         handynummer: '',
-        profilbeschreibung: ''
+        beschreibung: ''
     });
 
     useEffect(() => {
-        axiosInstance
-            .get("profil/" + getAuthInfo().id, {
-                headers: basicAuthHeader()
-            })
+        const getInfo = () => {
+            if (getAuthInfo().isVerein) {
+                return axiosInstance
+                    .get("verein/" + getAuthInfo().id, {
+                        headers: basicAuthHeader()
+                    })
+            } else {
+                return axiosInstance
+                    .get("profil/" + getAuthInfo().id, {
+                        headers: basicAuthHeader()
+                    })
+            }
+        };
+
+        getInfo()
             .then((response) => {
                 setProfileInfo({
-                    fullname: response.data.vorname + ' ' + response.data.nachname,
+                    fullname: getAuthInfo().isVerein ? response.data.vereinsname : response.data.vorname + ' ' + response.data.nachname,
                     email: response.data.email,
                     geburtsdatum: response.data.geburtsdatum,
                     plz: response.data.plz,
                     ort: response.data.ort,
                     handynummer: response.data.handynummer,
-                    profilbeschreibung: response.data.profilbeschreibung
+                    beschreibung: getAuthInfo().isVerein ? response.data.beschreibung : response.data.profilbeschreibung
                 })
             })
             .catch((err) => {
                 console.error("Profil error: " + JSON.stringify(err))
             });
     }, []);
+
+    let rows = [
+        {title: "E-Mail:", value: profileInfo.email},
+        {title: "Postleitzahl:", value: profileInfo.plz},
+        {title: "Ort:", value: profileInfo.ort},
+        {title: "Handynummer:", value: profileInfo.handynummer},
+        {title: "Beschreibung:", value: profileInfo.beschreibung}
+    ];
+    if (!getAuthInfo().isVerein)
+        rows.splice(1, 0, {title: "Geburtsdatum:", value: profileInfo.geburtsdatum});
+    rows = rows.map((data, index) =>
+        <div className={classes.flex}>
+            <div className={classes.marginLeft}>{data.title}</div>
+            <div className={classes.marginRight}>{data.value}</div>
+        </div>);
 
     return (
         <main className={classes.content}>
@@ -159,30 +185,7 @@ export default function Profile() {
                 <div className={classes.marginRight}>{profileInfo.fullname}</div>
             </div>
             <div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>E-Mail:</div>
-                    <div className={classes.marginRight}>{profileInfo.email}</div>
-                </div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>Geburtsdatum:</div>
-                    <div className={classes.marginRight}>{profileInfo.geburtsdatum}</div>
-                </div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>Postleitzahl:</div>
-                    <div className={classes.marginRight}>{profileInfo.plz}</div>
-                </div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>Ort:</div>
-                    <div className={classes.marginRight}>{profileInfo.ort}</div>
-                </div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>Handynummer:</div>
-                    <div className={classes.marginRight}>{profileInfo.handynummer}</div>
-                </div>
-                <div className={classes.flex}>
-                    <div className={classes.marginLeft}>Profilbeschreibung: </div>
-                    <div className={classes.marginRight}>{profileInfo.profilbeschreibung}</div>
-                </div>
+                {rows}
             </div>
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>

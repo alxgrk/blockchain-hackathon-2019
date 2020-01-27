@@ -19,7 +19,8 @@
     "react-iframe": "1.8.0",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.2.0",
-    "recharts": "1.8.5"
+    "recharts": "1.8.5",
+    "uuid": "3.4.0"
   },
   "browserslist": {
     "production": [
