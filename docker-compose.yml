@@ -27,13 +27,11 @@ services:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_USER: postgres
       POSTGRES_DB: Aktivist_Db
-    volumes:
-    - db-data:/var/lib/postgresql/data
     ports:
     - "5432:5432"
 
   blockchain:
-    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain:1.0.7
+    image: docker.pkg.github.com/alxgrk/blockchain-hackathon-2019/blockchain:1.0.8
     #build: ./blockchain/
     ports:
     - "8080:8080"
@@ -46,7 +44,7 @@ services:
     - ./blockchain/fabric-scripts/hlfv12/composer/crypto-config/:/hyperledger-fabric/crypto-config
     - ./blockchain/the-aktivist-network/lib/:/hyperledger-fabric/the-aktivist-network/lib
     - ./blockchain/the-aktivist-network/models/:/hyperledger-fabric/the-aktivist-network/models
-    - network-admin-cards:/hyperledger-fabric/admin-cards/
+    - /hyperledger-fabric/admin-cards
     - /hyperledger-fabric/node_modules
     - /root/.npm
 
@@ -55,6 +53,3 @@ networks:
     external:
      name: blockchain_hackathon
 
-volumes:
-  db-data:
-  network-admin-cards:

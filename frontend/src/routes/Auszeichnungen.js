@@ -95,16 +95,17 @@ export default function Auszeichnungen() {
           .then(response => {
             setEhrentaler(response.data.ehrentaler);
             setEhrenpunkte(response.data.ehrenpunkte);
-            response.data.aktivitaeten.forEach(it => {
-              let id = it.substring(it.lastIndexOf('#') + 1);
-              if (id === '') return;
-              axiosInstance.get("api/Aktivitaet/" + id)
-                  .then(res => {
-                    setAuszeichnungen(prevState => {
-                      return [...prevState, res.data.kategorie];
+            if (response.data.aktivitaeten)
+              response.data.aktivitaeten.forEach(it => {
+                let id = it.substring(it.lastIndexOf('#') + 1);
+                if (id === '') return;
+                axiosInstance.get("api/Aktivitaet/" + id)
+                    .then(res => {
+                      setAuszeichnungen(prevState => {
+                        return [...prevState, res.data.kategorie];
+                      });
                     });
-                  });
-            });
+              });
           });
     }
 

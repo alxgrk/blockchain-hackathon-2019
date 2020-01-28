@@ -12,6 +12,15 @@ VALUES('Erika.Ehrenfrau@Email.com', '123dwA6787dA8sd', 'Erika', 'Ehrenfrau', '19
 INSERT INTO Vereine(email, password, vereinsname, plz, ort, handynummer, beschreibung )
 VALUES('admin-verein', 'admin', 'Verein', 1203, 'Leipzig', 555123123,
 'Adminverein.');
+INSERT INTO Vereine(email, password, vereinsname, plz, ort, handynummer, beschreibung )
+VALUES('sport', 'sport', 'Sport mit Kindern e.V.', 1203, 'Leipzig', 555123123,
+'Sport mit Kindern e.V.');
+INSERT INTO Vereine(email, password, vereinsname, plz, ort, handynummer, beschreibung )
+VALUES('kochen', 'kochen', 'Kinderkochen und mehr', 1203, 'Leipzig', 555123123,
+'Kinderkochen und mehr.');
+INSERT INTO Vereine(email, password, vereinsname, plz, ort, handynummer, beschreibung )
+VALUES('tierheim', 'tierheim', 'Tierheim Leipzig', 1203, 'Leipzig', 555123123,
+'Tierheim Leipzig.');
 
 INSERT INTO Vereine(email, password, vereinsname, plz, ort, handynummer, beschreibung )
 VALUES('Verein.Verein@Email.com', '123dwA6787dA8sd', 'Verein', 1203, 'Leipzig', 555123123,

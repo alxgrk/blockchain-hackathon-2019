@@ -187,9 +187,10 @@ export default function Finder() {
                         let data = Object.assign({}, response.data, {
                             ehrentaler: response.data.ehrentaler + 100,
                             ehrenpunkte: response.data.ehrenpunkte + 100,
-                            aktivitaeten: [...response.data.aktivitaeten, "resource:org.uni.leipzig.aktivist.Aktivitaet#" + id]
+                            aktivitaeten: ["resource:org.uni.leipzig.aktivist.Aktivitaet#" + id]
                         });
-                        data.aktivitaeten = data.aktivitaeten.filter(it => it !== null);
+                        if (response.data.aktivitaeten)
+                            data.aktivitaeten = [...data.aktivitaeten, ...response.data.aktivitaeten];
                         delete data.akteurId;
                         axiosInstance.put("api/Benutzer/" + actorId, data)
                     });
