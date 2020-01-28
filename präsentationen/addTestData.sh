@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+# set -x
 
 # create verein if not existent
 for id in 2 3 4

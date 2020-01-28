@@ -28,6 +28,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from "@material-ui/core/Select";
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const axiosInstance = axios.create({
     baseURL: 'http://localhost:9876/'
@@ -115,6 +116,7 @@ export default function Finder() {
     });
     const [activities, setActivities] = useState([]);
     const [buttonText, setButtonText] = useState("Hinzufügen");
+    const [messageShownInSnackbar, setSnackbarMessage] = useState("");
 
     const actorId = getAuthInfo().id;
     useEffect(() => {
@@ -170,7 +172,7 @@ export default function Finder() {
 
     const updateSingleActivity = (id, key, value) => {
         let index = activities.findIndex(it => it.id === id);
-        if (id === -1) return;
+        if (index === -1) return;
         let activity = activities[index];
         let updated = {...activity, [key]: value};
         return axiosInstance.put("api/Aktivitaet/" + activity.id, updated)
@@ -182,7 +184,12 @@ export default function Finder() {
     const onMarkAsDone = (id) => () => {
         updateSingleActivity(id, "erledigt", true)
             .then(() => {
-                axiosInstance.get("api/Benutzer/" + actorId)
+                let index = activities.findIndex(it => it.id === id);
+                if (index === -1) return;
+                let benutzer = activities[index].benutzer;
+                let benutzerId = benutzer.substring(benutzer.lastIndexOf('$') + 1);
+                if (benutzerId === '') return;
+                axiosInstance.get("api/Benutzer/" + benutzerId)
                     .then(response => {
                         let data = Object.assign({}, response.data, {
                             ehrentaler: response.data.ehrentaler + 100,
@@ -192,14 +199,19 @@ export default function Finder() {
                         if (response.data.aktivitaeten)
                             data.aktivitaeten = [...data.aktivitaeten, ...response.data.aktivitaeten];
                         delete data.akteurId;
-                        axiosInstance.put("api/Benutzer/" + actorId, data)
+                        axiosInstance.put("api/Benutzer/" + benutzerId, data)
+                            .then(_ => {
+                                let index = activities.findIndex(it => it.id === id);
+                                if (index === -1) return;
+                                setSnackbarMessage(activities[index].name + " erledigt.")
+                            })
                     });
             });
     };
 
     const onDelete = (id) => () => {
         let index = activities.findIndex(it => it.id === id);
-        if (id === -1) return;
+        if (index === -1) return;
         axiosInstance.delete("api/Aktivitaet/" + activities[index].id)
             .then(_ => {
                 const updated = activities.slice()
@@ -318,7 +330,7 @@ export default function Finder() {
 
     const cards = activities
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .filter(data => !data.benutzer || data.benutzer.endsWith(actorId))
+        .filter(data => !data.benutzer || data.benutzer.endsWith(actorId) || getAuthInfo().isVerein)
         .map((data, index) =>
             <Card key={index} className={classes.card}>
                 <CardContent>
@@ -430,6 +442,15 @@ export default function Finder() {
                 <Box pt={4}>
                     <Copyright/>
                 </Box>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                    }}
+                    open={messageShownInSnackbar !== ""}
+                    autoHideDuration={2000}
+                    onClose={() => { setSnackbarMessage("") }}
+                    message={messageShownInSnackbar} />
             </Container>
         </main>
     )
