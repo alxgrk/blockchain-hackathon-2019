@@ -4,11 +4,20 @@ namespace org.uni.leipzig.aktivist
 /**
   Assets
  */
+enum Kategorie {
+  o Kinder
+  o Organisation
+  o Sport
+  o Tiere
+  o Andere
+}
 asset Aktivitaet identified by id {
   o String id
   o String name
   o String beschreibung
   o String date
+  o Kategorie kategorie
+  o Boolean erledigt default=false
   --> Verein anbieter
   --> Benutzer benutzer optional
 }

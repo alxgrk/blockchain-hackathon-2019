@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../ui-components/Copyright";
 import BorderColorIcon from '@material-ui/icons/BorderColor';
@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Auszeichnungen() {
   const classes = useStyles();
-  const theme = useTheme();
 
   const [ehrentaler, setEhrentaler] = useState(0);
   const [ehrenpunkte, setEhrenpunkte] = useState(0);
@@ -96,14 +95,23 @@ export default function Auszeichnungen() {
           .then(response => {
             setEhrentaler(response.data.ehrentaler);
             setEhrenpunkte(response.data.ehrenpunkte);
-            setAuszeichnungen(response.data.zertifikate)
+            response.data.aktivitaeten.forEach(it => {
+              let id = it.substring(it.lastIndexOf('#') + 1);
+              if (id === '') return;
+              axiosInstance.get("api/Aktivitaet/" + id)
+                  .then(res => {
+                    setAuszeichnungen(prevState => {
+                      return [...prevState, res.data.kategorie];
+                    });
+                  });
+            });
           });
     }
 
     if (!getAuthInfo().isVerein)
       getUser()
           .catch(err => {
-            if (err.response.status === 404) {
+            if (err.response && err.response.status === 404) {
               axiosInstance.post("api/Benutzer",
                   {
                     $class: "org.uni.leipzig.aktivist.Benutzer",
@@ -113,6 +121,19 @@ export default function Auszeichnungen() {
             }
           })
   }, []);
+
+  const countCategories = (key) => {
+    return auszeichnungen.filter(it => it.toLowerCase() === key.toLowerCase()).length;
+  };
+  const isBronze = (key) => {
+    return countCategories(key) >= 1 ? classes.iconBronze : classes.icon
+  };
+  const isSilver = (key) => {
+    return countCategories(key) >= 2 ? classes.iconSilver : classes.icon
+  };
+  const isGold = (key) => {
+    return countCategories(key) >= 3 ? classes.iconGold : classes.icon
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -133,27 +154,30 @@ export default function Auszeichnungen() {
         <div className={classes.titlebar}>Auszeichnungen</div>
         <div className={classes.iconTitle}>Kinder</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconBronze}/></div>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconSilver}/></div>
-            <div className={classes.iconDiv}><ChildCareIcon className={classes.iconGold}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={isBronze("Kinder")}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={isSilver("Kinder")}/></div>
+            <div className={classes.iconDiv}><ChildCareIcon className={isGold("Kinder")}/></div>
           </div>
         <div className={classes.iconTitle}>Organisation</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><BorderColorIcon className={classes.iconBronze}/></div>
-            <div className={classes.iconDiv}><BorderColorIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><BorderColorIcon className={classes.icon}/></div>
+            <div className={classes.iconDiv}><BorderColorIcon className={isBronze("Organisation")}/>
+            </div>
+            <div className={classes.iconDiv}><BorderColorIcon className={isSilver("Organisation")}/>
+            </div>
+            <div className={classes.iconDiv}><BorderColorIcon className={isGold("Organisation")}/>
+            </div>
           </div>
         <div className={classes.iconTitle}>Sport</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><SportsSoccerIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><SportsSoccerIcon className={classes.icon}/></div>
-            <div className={classes.iconDiv}><SportsSoccerIcon className={classes.icon}/></div>
+            <div className={classes.iconDiv}><SportsSoccerIcon className={isBronze("Sport")}/></div>
+            <div className={classes.iconDiv}><SportsSoccerIcon className={isSilver("Sport")}/></div>
+            <div className={classes.iconDiv}><SportsSoccerIcon className={isGold("Sport")}/></div>
           </div>
           <div className={classes.iconTitle}>Tiere</div>
           <div className={classes.container}>
-            <div className={classes.iconDiv}><PetsIcon className={classes.iconBronze}/></div>
-            <div className={classes.iconDiv}><PetsIcon className={classes.iconSilver}/></div>
-            <div className={classes.iconDiv}><PetsIcon className={classes.iconGold}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={isBronze("Tiere")}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={isSilver("Tiere")}/></div>
+            <div className={classes.iconDiv}><PetsIcon className={isGold("Tiere")}/></div>
           </div>
       </div>
       <Box mt={8}>
