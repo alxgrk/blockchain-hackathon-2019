@@ -25,4 +25,6 @@ checkParams
 docker login docker.pkg.github.com -u $USERNAME -p $GITHUB_PAT
 
 docker network create --label com.docker.compose.network=default --label com.docker.compose.project=blockchain_hackathon --label com.docker.compose.version=1.24.1 --attachable blockchain_hackathon
+docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up -d peer0.org1.example.com couchdb ca.org1.example.com orderer.example.com
+sleep 10
 docker-compose -f docker-compose.yml -f hyperledger-fabric/docker-compose.yml up -d
